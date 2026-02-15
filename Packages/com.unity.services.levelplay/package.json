@@ -1,0 +1,45 @@
+{
+  "name": "com.unity.services.levelplay",
+  "displayName": "Ads Mediation",
+  "version": "9.3.0",
+  "unity": "2021.3",
+  "description": "After you've installed the Ads Mediation package, create a LevelPlay account and complete your app's ad format integrations if you haven't done so already. Here are the next steps: https://developers.is.com/ironsource-mobile/unity/levelplay-starter-kit/\n\nIMPORTANT UPGRADE NOTES:\n\nBefore updating from Ads Mediation <9.0.0 (or levelplay.unitypackage) to Ads Mediation v9.0.0+, complete the following actions to migrate smoothly:\n\nPlease note: if you are using Developer Settings, you will need to back up your values and re-enter them once you have updated to the latest version of the SDK.\n\n1. In your Project window, locate the Assets/LevelPlay (or Assets/IronSource) folder. Delete this folder and its contents.\n2. In your Project window, locate the Assets/Mobile Dependency Resolver folder. If it exists, delete this folder and its contents.\n3. Return to the Ads Mediation package in Package Manager and install the latest version.\n4. Launch the LevelPlay Network Manager from the Ads Mediation top menu and reinstall network adapters.\n\nFor more information:\n\n▪ Migration guide: https://developers.is.com/ironsource-mobile/unity/unity-package-migration-9-0-0/\n▪ Troubleshooting steps: https://docs.unity.com/en-us/grow/dashboard/levelplay/troubleshoot\n\nPACKAGE DESCRIPTION:\n\nDrive higher revenue with the leading ads mediation platform from Unity. LevelPlay gives you access to a unified auction of all the leading SDK networks and bidders to maximize competition and increase your potential earnings. Serve a diverse mix of ad formats, get real time monetization data, A/B test adjustments to your ad strategy, and more.\n\nSupported platforms:\n\n▪ Android\n▪ iOS",
+  "documentationUrl": "https://developers.is.com/ironsource-mobile/unity/levelplay-starter-kit/",
+  "_upm": {
+    "gameService": {
+      "groupIndex": 4,
+      "groupName": "Monetize",
+      "genericDashboardUrl": "https://platform.ironsrc.com",
+      "projectDashboardUrl": "https://platform.ironsrc.com",
+      "projectDashboardUrlType": "OrganizationKey",
+      "groupId": "monetization"
+    },
+    "supportedPlatforms": [
+      "Android",
+      "iOS"
+    ],
+    "changelog": "For the full SDK Change Log, visit https://developers.is.com/ironsource-mobile/unity/sdk-change-log/"
+  },
+  "dependencies": {
+    "com.unity.services.core": "1.15.1"
+  },
+  "samples": [
+    {
+      "displayName": "Unity LevelPlay Sample",
+      "description": "An example of LevelPlay integration.",
+      "path": "Samples~/UnityLevelPlaySample"
+    }
+  ],
+  "relatedPackages": {
+    "com.unity.services.levelplay.tests": "9.3.0"
+  },
+  "upmCi": {
+    "footprint": "2b420e5dc7c64cbb319b4311597f1bd5108ebb39"
+  },
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git",
+    "type": "git",
+    "revision": "576ef0c909329fe2d72d85460a5f166e6b02df52"
+  },
+  "_fingerprint": "eee782b8b69d5106efaf3ea76c94834c8b5e7b2f"
+}

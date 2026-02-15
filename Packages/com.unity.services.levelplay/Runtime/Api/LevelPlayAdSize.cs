@@ -1,0 +1,157 @@
+namespace Unity.Services.LevelPlay
+{
+    /// <summary>
+    /// Represents dimensions and descriptions for different types of advertisement sizes.
+    /// </summary>
+    public sealed class LevelPlayAdSize
+    {
+        IPlatformLevelPlayAdSize m_PlatformLevelPlayAdSize;
+
+        internal IPlatformLevelPlayAdSize GetPlatformLevelPlayAdSize()
+        {
+            return m_PlatformLevelPlayAdSize;
+        }
+
+        /// <summary>
+        /// Standard banner size
+        /// </summary>
+        public static LevelPlayAdSize BANNER = new LevelPlayAdSize(PlatformLevelPlayAdSizeType.Banner);
+
+        /// <summary>
+        /// Standard large size
+        /// </summary>
+        public static LevelPlayAdSize LARGE = new LevelPlayAdSize(PlatformLevelPlayAdSizeType.Large);
+
+        /// <summary>
+        /// Standard mrec size
+        /// </summary>
+        public static LevelPlayAdSize MEDIUM_RECTANGLE = new LevelPlayAdSize(PlatformLevelPlayAdSizeType.MediumRectangle);
+
+        /// <summary>
+        /// Standard leaderboard size
+        /// </summary>
+        public static LevelPlayAdSize LEADERBOARD = new LevelPlayAdSize(PlatformLevelPlayAdSizeType.LeaderBoard);
+
+        internal LevelPlayAdSize() : this(PlatformLevelPlayAdSizeType.Unknown) {}
+
+        // internal constructor for testing and private use inside this class
+        internal LevelPlayAdSize(IPlatformLevelPlayAdSize adSize)
+        {
+            m_PlatformLevelPlayAdSize = adSize;
+        }
+
+        LevelPlayAdSize(PlatformLevelPlayAdSizeType adSizeType)
+        {
+#if !UNITY_IOS && !UNITY_ANDROID
+            m_PlatformLevelPlayAdSize = new UnsupportedLevelPlayAdSize();
+#elif UNITY_EDITOR
+            m_PlatformLevelPlayAdSize = new EditorLevelPlayAdSize(adSizeType);
+#elif UNITY_IOS
+            m_PlatformLevelPlayAdSize = new IosLevelPlayAdSize(adSizeType);
+#elif UNITY_ANDROID
+            m_PlatformLevelPlayAdSize = new AndroidLevelPlayAdSize(adSizeType);
+#endif
+        }
+
+        LevelPlayAdSize(int width, int height)
+        {
+#if !UNITY_IOS && !UNITY_ANDROID
+            m_PlatformLevelPlayAdSize = new UnsupportedLevelPlayAdSize();
+#elif UNITY_EDITOR
+            m_PlatformLevelPlayAdSize = new EditorLevelPlayAdSize(width, height);
+#elif UNITY_IOS
+            m_PlatformLevelPlayAdSize = new IosLevelPlayAdSize(width, height);
+#elif UNITY_ANDROID
+            m_PlatformLevelPlayAdSize = new AndroidLevelPlayAdSize(width, height);
+#endif
+        }
+
+        /// <summary>
+        /// Creates a custom banner size with specified dimensions.
+        /// </summary>
+        /// <param name="width">The width of the custom banner in pixels.</param>
+        /// <param name="height">The height of the custom banner in pixels.</param>
+        /// <returns>A new instance of <see cref="LevelPlayAdSize"/> representing the custom size.</returns>
+        public static LevelPlayAdSize CreateCustomBannerSize(int width, int height)
+        {
+            return new LevelPlayAdSize(width, height);
+        }
+
+        /// <summary>
+        /// Creates an adaptive banner with default screen width.
+        /// The default screen width is used if the custom width is not specified. Specify the custom width if necessary.
+        /// </summary>
+        /// <param name="customWidth">Custom width of the adaptive banner container.
+        /// On Android, it is measured in DP(density-independent pixels), and on IOS, it is in measured in Points.</param>
+        /// <returns>A new instance of <see cref="LevelPlayAdSize"/> representing the Adaptive size.</returns>
+        public static LevelPlayAdSize CreateAdaptiveAdSize(int customWidth = -1)
+        {
+            if (customWidth < 0)
+            {
+#if !UNITY_IOS && !UNITY_ANDROID
+                return new LevelPlayAdSize(new UnsupportedLevelPlayAdSize());
+#elif UNITY_EDITOR
+                return new LevelPlayAdSize(EditorLevelPlayAdSize.CreateAdaptiveAdSize(customWidth));
+#elif UNITY_IOS
+                return new LevelPlayAdSize(IosLevelPlayAdSize.CreateAdaptiveAdSize());
+#elif UNITY_ANDROID
+                return new LevelPlayAdSize(AndroidLevelPlayAdSize.CreateAdaptiveAdSize());
+#endif
+            }
+            else
+            {
+#if !UNITY_IOS && !UNITY_ANDROID
+                return new LevelPlayAdSize(new UnsupportedLevelPlayAdSize());
+#elif UNITY_EDITOR
+                return new LevelPlayAdSize(EditorLevelPlayAdSize.CreateAdaptiveAdSize(customWidth));
+#elif UNITY_IOS
+                return new LevelPlayAdSize(IosLevelPlayAdSize.CreateAdaptiveAdSize(customWidth));
+#elif UNITY_ANDROID
+                return new LevelPlayAdSize(AndroidLevelPlayAdSize.CreateAdaptiveAdSize(customWidth));
+#endif
+            }
+        }
+
+        /// <summary>
+        /// Description for the banner
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                switch (m_PlatformLevelPlayAdSize.AdSizeType)
+                {
+                    case PlatformLevelPlayAdSizeType.Banner:
+                        return "BANNER";
+                    case PlatformLevelPlayAdSizeType.Large:
+                        return "LARGE";
+                    case PlatformLevelPlayAdSizeType.MediumRectangle:
+                        return "MEDIUM_RECTANGLE";
+                    case PlatformLevelPlayAdSizeType.LeaderBoard:
+                        return "LEADERBOARD";
+                    case PlatformLevelPlayAdSizeType.Custom:
+                        return "CUSTOM";
+                    case PlatformLevelPlayAdSizeType.Adaptive:
+                        return "ADAPTIVE";
+                    default:
+                        return "UNKNOWN";
+                }
+            }
+        }
+
+        /// <summary>
+        /// Width of the banner
+        /// </summary>
+        public int Width { get { return m_PlatformLevelPlayAdSize.Width; } }
+
+        /// <summary>
+        /// Height of the banner
+        /// </summary>
+        public int Height { get { return m_PlatformLevelPlayAdSize.Height; } }
+
+        public override string ToString()
+        {
+            return string.Format("Description: {0}, Width: {1}, Height: {2}", Description, Width, Height);
+        }
+    }
+}

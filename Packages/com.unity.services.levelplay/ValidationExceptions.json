@@ -1,0 +1,60 @@
+{
+  "ErrorExceptions": [
+    {
+      "ValidationTest": "Manifest Validation",
+      "ExceptionMessage": "In package.json, \"documentationUrl\" can't be used for Unity packages.  It is a features reserved for enterprise customers.  The Unity documentation team will ensure the package's documentation is published in the appropriate fashion",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "Package Lifecycle Validation",
+      "ExceptionMessage": "There is no previous Pre-Release version of this package available. By Lifecycle V2 rules, the first Pre-Release iteration of a new version needs to be approved and promoted by Release Management. Please contact Release Management to promote your package. Read more about this error and potential solutions at https://docs.unity3d.com/Packages/com.unity.package-validation-suite@latest/index.html?preview=1&subfolder=/manual/lifecycle_validation_error.html#previous-version-of-this-package-is-not-a-pre-release-version",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "API Validation",
+      "ExceptionMessage": "Assembly \"LevelPlay.Installer.Editor\" no longer exists or is no longer included in build. This change requires a new major version.",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "API Validation",
+      "ExceptionMessage": "Breaking changes require a new major version.",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "API Validation",
+      "ExceptionMessage": "Additions require a new minor or major version.",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "API Validation",
+      "ExceptionMessage": "Compilation in progress. Please wait for compilation to finish.",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "API Updater Configuration Validation",
+      "ExceptionMessage": "",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "Xmldoc Validation",
+      "ExceptionMessage": "",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "Assets Validation",
+      "ExceptionMessage": "/Runtime/Platforms/Editor/EditorAds/Assets/banner_bg_320x50.jpg cannot be included in a package. All images we share with users must use the png format. This is an expectation shared with asset store packages as well, and will help us provide high quality images for our users.",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "Assets Validation",
+      "ExceptionMessage": "/Runtime/Platforms/Editor/EditorAds/Assets/interstitial_bg_1024x768.jpg cannot be included in a package. All images we share with users must use the png format. This is an expectation shared with asset store packages as well, and will help us provide high quality images for our users.",
+      "PackageVersion": "9.3.0"
+    },
+    {
+      "ValidationTest": "Assets Validation",
+      "ExceptionMessage": "/Runtime/Platforms/Editor/EditorAds/Assets/rewarded_bg_1024x768.jpg cannot be included in a package. All images we share with users must use the png format. This is an expectation shared with asset store packages as well, and will help us provide high quality images for our users.",
+      "PackageVersion": "9.3.0"
+    }
+  ],
+  "WarningExceptions": []
+}

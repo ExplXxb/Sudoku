@@ -1,0 +1,67 @@
+using System.Threading.Tasks;
+
+namespace Unity.Services.LevelPlay.Editor
+{
+    class DotUnityPackageLevelPlaySdkInstaller : ILevelPlaySdkInstaller
+    {
+        private readonly IEditorAnalyticsService m_EditorAnalyticsService;
+        private readonly IFileService m_FileService;
+        private readonly SdkInstaller m_SdkInstaller;
+        private bool m_IsAdsMediationBuilderProject;
+
+        internal DotUnityPackageLevelPlaySdkInstaller(
+            ILevelPlayLogger logger,
+            ILevelPlayNetworkManager levelPlayNetworkManager,
+            IFileService fileService,
+            IEditorAnalyticsService editorAnalyticsService
+        ) : this(
+            logger,
+            levelPlayNetworkManager,
+            fileService,
+            editorAnalyticsService,
+#if AdsMediation_BuilderProject
+            true
+#else
+            false
+#endif
+        )
+        {}
+
+        internal DotUnityPackageLevelPlaySdkInstaller(
+            ILevelPlayLogger logger,
+            ILevelPlayNetworkManager levelPlayNetworkManager,
+            IFileService fileService,
+            IEditorAnalyticsService editorAnalyticsService,
+            bool isAdsMediationBuilderProject
+        )
+        {
+            m_EditorAnalyticsService = editorAnalyticsService;
+            m_FileService = fileService;
+            m_SdkInstaller = new SdkInstaller(logger, levelPlayNetworkManager);
+            m_IsAdsMediationBuilderProject = isAdsMediationBuilderProject;
+        }
+
+        public async Task OnLoad()
+        {
+            if (!m_IsAdsMediationBuilderProject)
+            {
+                await m_SdkInstaller.PreInstallAsync();
+
+                if (m_FileService.Exists(FilePaths.DotUnityPackageFootprintFilePath))
+                {
+                    m_FileService.Delete(FilePaths.DotUnityPackageFootprintFilePath);
+                    m_FileService.Delete(FilePaths.DotUnityPackageFootprintMetaFilePath);
+                    SendInstallAnalyticsEvent();
+                    await m_SdkInstaller.InstallLatestIronSourceSdkAsync();
+                }
+
+                await m_SdkInstaller.InstallUnityAdsAdapterAsync();
+            }
+        }
+
+        void SendInstallAnalyticsEvent()
+        {
+            m_EditorAnalyticsService.SendInstallPackage(EditorAnalyticsService.LevelPlayComponent.UnityPackage);
+        }
+    }
+}

@@ -1,16 +1,12 @@
-// ����, �� ���� ��������� ����� ���� ���������� ���, ����������� �������� ��� ���
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameOverMenu : MonoBehaviour
 {
-    public Text textClock; // �������� ���� ��� ����������� ��������� ���� ��� �� �����
+    [SerializeField] private Text _textClock;
 
-    // �����, �� �����������, ���� ������� �������� ������������� ����� ������ �������� ����-����� ������ Update
     void Start()
     {
-        textClock.text = Clock.Instance.GetCurrentTimeText().text; // �������� ��� � ��������� ��������� 
-    }                                                                                                  // ��� � �������� ���� � �������� ����
+        _textClock.text = Clock.Instance.GetCurrentTimeText().text;
+    }                                                                                                  
 }

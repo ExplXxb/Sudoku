@@ -1,76 +1,69 @@
-// ����, �� ����������� ������� ���� � �� ������. ³� ������� �� ����������� ����� � ����� ������� ����,
-// ����������� �� ��������� ���������, ������� ���� ���� ����� �� ����� ����.
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using static GameEvents;
-using Unity.VisualScripting;
 
 public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 {
-    public GameObject number_text; // ��'��� (�������� ����) ��� ����������� ����� � ������� �� �����
-    public List<GameObject> number_notes; // ������ ��'���� (��������� ����) ��� ����������� ������� � ������� (������)
-    private bool note_active_; // �� ���������� ����� ������� � ������� (������)
-    private int number_ = 0; // �����, ��� �������� � ������� (������)
-    private int correct_number_ = 0; // ��������� ����� ��� ���� ������� (������)
+    [SerializeField] private GameObject _numberText;
+    [SerializeField] private List<GameObject> _numberNotes;
 
-    private bool selected_ = false; // �� ������ �� ������� (������)
-    private int square_index_ = -1; // ������ �������(������) � ����
-    private bool has_default_value_ = false; // �� � � �������(������) �������� �� �������������
-    private bool has_wrong_value_ = false; // �� �� �������(������) ����������� ��������
-    private bool is_solved_ = false;
+    [SerializeField] private Color _defaultColor = new Color(0.85f, 0.85f, 0.85f);
+    [SerializeField] private Color _normalColor = Color.white;
 
-    public int GetSquareNumber() { return number_; }// �������� ����� � �������
-    public bool IsCorrectNumberSet() { return number_ == correct_number_; } // ���������, �� ����������� ��������� ����� � ������� (������)
-    public bool HasWrongValue() { return has_wrong_value_; } // ���������, �� � � �������(������) ����������� ��������
-    public void SetHasDefaultValue(bool has_default) { has_default_value_ = has_default; } // ���������� �������� �������� �� ������������� � ������� (������)
-    public bool GetHasDefaultValue() { return has_default_value_; } // �������� �������� �������� �� ������������� � ������� (������)
-    public bool IsSelected() { return selected_; } // ���������, �� �������(������) ������
-    public void SetSquareIndex(int index) { square_index_ = index; } // ���������� ������ �������(������) � ����
+    private int _number = 0;
+    private int _correctNumber = 0;
+    private int _squareIndex = -1;
 
-    // ���������� ��������� ����� ��� ������
+    private bool _selected = false;
+    private bool _hasDefaultValue = false;
+    private bool _hasWrongValue = false;
+    private bool _isSolved = false;
+    private bool _noteActive;
+
+    public int GetSquareNumber() { return _number; }
+    public bool IsCorrectNumberSet() { return _number == _correctNumber; }
+    public bool HasWrongValue() { return _hasWrongValue; }
+    public void SetHasDefaultValue(bool has_default) { _hasDefaultValue = has_default; }
+    public bool GetHasDefaultValue() { return _hasDefaultValue; }
+    public bool IsSelected() { return _selected; }
+    public void SetSquareIndex(int index) { _squareIndex = index; }
+
+    private void Start()
+    {
+        _selected = false;
+        _noteActive = false;
+
+        if (GameSettings.Instance.GetContinuePreviousGame() == false)
+            SetNoteNumberValue(0);
+        else
+            SetClearEmptyNotes();
+    }
+
     public void SetCorrectNumber(int number)
     {
-        correct_number_ = number;
-        has_wrong_value_ = false;
+        _correctNumber = number;
+        _hasWrongValue = false;
 
-        if (number_ != 0 && number_ != correct_number_)
+        if (_number != 0 && _number != _correctNumber)
         {
-            has_wrong_value_ = true;
+            _hasWrongValue = true;
             SetSquareColor(Color.red);
         }
     }
 
-    // ���������� ����� � ������� �� ��������� �����
-    public void SetCorrectNumber() // ������������� ����� ������� SetCorrectNumber(), �� ����������� ����
+    public void SetCorrectNumber()
     {
-        number_ = correct_number_;
+        _number = _correctNumber;
         SetNoteNumberValue(0);
         DisplayText();
     }
 
-    // �����, �� �����������, ���� ������� �������� ������������� ����� ������ �������� ����-����� ������ Update
-    void Start()
-    {
-        selected_ = false;
-        note_active_ = false;
-
-        // ���������� � ����������� ������ ���
-        if (GameSettings.Instance.GetContinuePreviousGame() == false)
-            SetNoteNumberValue(0); // ͳ - ��������� ���� ���� � ����������� ���������� � �������� (�������)
-        else
-            SetClearEmptyNotes(); // ��� - ��������� ���� ����� ��������� ���������� � �������� (�������)
-    }
-
-    // �������� ������ �����, �� ������������� ������� ������� � ��
     public List<string> GetSquareNotes()
     {
         List<string> notes = new List<string>();
 
-        foreach (var number in number_notes)
+        foreach (var number in _numberNotes)
         {
             notes.Add(number.GetComponent<Text>().text);
         }
@@ -78,46 +71,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         return notes;
     }
 
-    // ���������� �������� �� ������������� ��� ������� � �����
-    private void SetClearEmptyNotes()
-    {
-        foreach (var number in number_notes)
-        {
-            if (number.GetComponent<Text>().text == "0")
-                number.GetComponent<Text>().text = " ";
-        }
-    }
-
-    // ���������� �������� ��� ������� � ������� (������)
-    private void SetNoteNumberValue(int value)
-    {
-        foreach (var number in number_notes)
-        {
-            if (value <= 0)  // �������� �� ����� ����� ��� ��� ���� �� �������
-                number.GetComponent<Text>().text = " ";
-            else
-                number.GetComponent<Text>().text = value.ToString();
-        }
-    }
-
-    // ���������� ���� �������� ��� ������� � ������� (������)
-    private void SetNotesSingleNumberValue(int value, bool force_update = false)
-    {
-        if (note_active_ == false && force_update == false)
-            return;
-
-        if (value <= 0) // �������� �� ����� ����� ��� ��� ���� �� �������
-            number_notes[value - 1].GetComponent<Text>().text = " ";
-        else
-        {
-            if (number_notes[value - 1].GetComponent<Text>().text == " " || force_update)
-                number_notes[value - 1].GetComponent<Text>().text = value.ToString();
-            else
-                number_notes[value - 1].GetComponent<Text>().text = " ";
-        }
-    }
-
-    // ���������� ������� ��� ������� (������)
     public void SetGridNotes(List<int> notes)
     {
         foreach (var note in notes)
@@ -126,29 +79,27 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
     }
 
-    // ���������� ��� �������� ����� ������� � ������� (������)
     public void OnNotesActive(bool active)
     {
-        if (is_solved_) return;
-        note_active_ = active;
+        if (_isSolved) return;
+        _noteActive = active;
     }
 
-    // ³���������� ����� � ������� (������)
     public void DisplayText()
     {
-        var text = number_text.GetComponent<Text>();
+        var text = _numberText.GetComponent<Text>();
 
-        if (number_ <= 0)
+        if (_number <= 0)
             text.text = " ";
         else
-            text.text = number_.ToString();
+            text.text = _number.ToString();
 
         var colors = this.colors;
 
-        if (has_default_value_)
+        if (_hasDefaultValue)
         {
             text.fontStyle = FontStyle.Bold;
-            colors.normalColor = defaultColor;
+            colors.normalColor = _defaultColor;
         }
         else
         {
@@ -159,28 +110,113 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         this.colors = colors;
     }
 
-
-    // ���������� �������� ����� � ������� (������)
     public void SetNumber(int number)
     {
-        number_ = number;
+        _number = number;
         DisplayText();
     }
 
-    // ������� ���� �����
     public void OnPointerClick(PointerEventData eventData)
     {
-        selected_ = true;
-        GameEvents.SquareSelectedMethod(square_index_);
+        _selected = true;
+        GameEvents.SquareSelectedMethod(_squareIndex);
     }
 
-    // ������� ���� �������
     public void OnSubmit(BaseEventData eventData)
     {
 
     }
 
-    // ������� ��䳿 �������� ������� (������)
+    public void OnClearNumber()
+    {
+        if (_selected && !_hasDefaultValue && !_isSolved)
+        {
+            _number = 0;
+            _hasWrongValue = false;
+            SetSquareColor(Color.white);
+            SetNoteNumberValue(0);
+            DisplayText();
+        }
+    }
+
+    public void SetCorrectValueOnHint()
+    {
+        SetSquareNumber(_correctNumber);
+    }
+
+    public void OnSetNumber(int number)
+    {
+        if (_selected && _hasDefaultValue == false && _isSolved == false)
+        {
+            SetSquareNumber(number);
+        }
+    }
+
+    public void OnSquareSelected(int square_index)
+    {
+        if (_squareIndex != square_index)
+        {
+            _selected = false;
+        }
+    }
+
+    public void SetSquareColor(Color color)
+    {
+        var colors = this.colors;
+        colors.normalColor = color;
+        this.colors = colors;
+    }
+
+    public void ResetBaseColor()
+    {
+        if (_hasWrongValue)
+        {
+            SetSquareColor(Color.red);
+            return;
+        }
+
+        if (_hasDefaultValue)
+            SetSquareColor(_defaultColor);
+        else
+            SetSquareColor(_normalColor);
+    }
+
+    private void SetClearEmptyNotes()
+    {
+        foreach (var number in _numberNotes)
+        {
+            if (number.GetComponent<Text>().text == "0")
+                number.GetComponent<Text>().text = " ";
+        }
+    }
+
+    private void SetNoteNumberValue(int value)
+    {
+        foreach (var number in _numberNotes)
+        {
+            if (value <= 0)
+                number.GetComponent<Text>().text = " ";
+            else
+                number.GetComponent<Text>().text = value.ToString();
+        }
+    }
+
+    private void SetNotesSingleNumberValue(int value, bool forceUpdate = false)
+    {
+        if (_noteActive == false && forceUpdate == false)
+            return;
+
+        if (value <= 0)
+            _numberNotes[value - 1].GetComponent<Text>().text = " ";
+        else
+        {
+            if (_numberNotes[value - 1].GetComponent<Text>().text == " " || forceUpdate)
+                _numberNotes[value - 1].GetComponent<Text>().text = value.ToString();
+            else
+                _numberNotes[value - 1].GetComponent<Text>().text = " ";
+        }
+    }
+
     private void OnEnable()
     {
         GameEvents.OnUpdateSquareNumber += OnSetNumber;
@@ -190,7 +226,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         GameEvents.OnGameOver += OnGameOver;
     }
 
-    // ������� ��䳿 ��������� ������� (������)
     private void OnDisable()
     {
         GameEvents.OnUpdateSquareNumber -= OnSetNumber;
@@ -200,62 +235,32 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         GameEvents.OnGameOver -= OnGameOver;
     }
 
-    // ��������� ���
     private void OnGameOver()
     {
-        if (number_ != 0 && number_ != correct_number_)
+        if (_number != 0 && _number != _correctNumber)
         {
-            has_default_value_ = false;
+            _hasDefaultValue = false;
             SetSquareColor(Color.white);
-            number_ = 0;
+            _number = 0;
             DisplayText();
         }
         SetSquareColor(Color.white);
     }
 
-    // �������� �������� ����� � ����� (������)
-    public void OnClearNumber()
-    {
-        if (selected_ && !has_default_value_ && !is_solved_)
-        {
-            number_ = 0;
-            has_wrong_value_ = false;
-            SetSquareColor(Color.white);
-            SetNoteNumberValue(0);
-            DisplayText();
-        }
-    }
-
-    // ���������� ��������� �������� � �������(������) ��� ���������� �������
-    public void SetCorrectValueOnHint()
-    {
-        SetSquareNumber(correct_number_);
-    }
-
-    // ���������� ����� � �������(������) ��� ��䳿 ��������� �����
-    public void OnSetNumber(int number)
-    {
-        if (selected_ && has_default_value_ == false && is_solved_ == false)
-        {
-            SetSquareNumber(number);
-        }
-    }
-
-    // ���������� ����� � ������� (������)
     private void SetSquareNumber(int number)
     {
-        if (note_active_ == true && has_wrong_value_ == false)
+        if (_noteActive == true && _hasWrongValue == false)
         {
             SetNotesSingleNumberValue(number);
         }
-        else if (note_active_ == false)
+        else if (_noteActive == false)
         {
             SetNoteNumberValue(0);
             SetNumber(number);
 
-            if (number_ != correct_number_)
+            if (_number != _correctNumber)
             {
-                has_wrong_value_ = true;
+                _hasWrongValue = true;
                 var colors = this.colors;
                 colors.normalColor = Color.red;
                 this.colors = colors;
@@ -264,48 +269,13 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             }
             else
             {
-                has_wrong_value_ = false;
-                is_solved_ = true; 
-                note_active_ = false; 
+                _hasWrongValue = false;
+                _isSolved = true; 
+                _noteActive = false; 
                 ResetBaseColor();
             }
 
         }
         GameEvents.CheckBoardCompletedMethod();
     }
-
-    // ������� ��䳿 ������� ������� (������)
-    public void OnSquareSelected(int square_index)
-    {
-        if (square_index_ != square_index)
-        {
-            selected_ = false;
-        }
-    }
-
-    // ���������� ���� ������� (������)
-    public void SetSquareColor(Color color)
-    {
-        var colors = this.colors;
-        colors.normalColor = color;
-        this.colors = colors;
-    }
-
-    [SerializeField] private Color defaultColor = new Color(0.85f, 0.85f, 0.85f);
-    [SerializeField] private Color normalColor = Color.white;
-
-    public void ResetBaseColor()
-    {
-        if (has_wrong_value_)
-        {
-            SetSquareColor(Color.red);
-            return;
-        }
-
-        if (has_default_value_)
-            SetSquareColor(defaultColor);
-        else
-            SetSquareColor(normalColor);
-    }
-
 }

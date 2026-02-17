@@ -1,22 +1,16 @@
-// ����, �� ������� �� ��������� ��������� ������ � �������
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class NumberButton : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 {
-    public int value = 0; // ��������, �� ������������ �� ������
+    [SerializeField] private int _value = 0;
 
-    // �������� ��䳿 ���� �����
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameEvents.UpdateSquareNumberMethod(value);
+        GameEvents.UpdateSquareNumberMethod(_value);
     }
 
-    // �������� ��䳿 ������������
     public void OnSubmit(BaseEventData eventData)
     {
 

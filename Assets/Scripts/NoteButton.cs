@@ -1,33 +1,28 @@
-// ����, �� ������� �� ��������� ���������� ������ �������.
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class NoteButton : Selectable, IPointerClickHandler
 {
-    public Sprite on_image; // ��'��� (����������) ������, ���� ������� �������
-    public Sprite off_image; // ��'��� (����������) ������, ���� ������� �������
+    [SerializeField] private Sprite _onImage;
+    [SerializeField] private Sprite _offImage;
 
-    private bool active_; // �� ������� ������
+    private bool _active;
 
-    // �����, �� �����������, ���� ������� �������� ������������� ����� ������ �������� ����-����� ������ Update
-    void Start()
+    private void Start()
     {
-        active_ = false;
+        _active = false;
     }
 
-    // �������� ��䳿 ���� �����
     public void OnPointerClick(PointerEventData eventData)
     {
-        active_ = !active_; // ���������� �������� ����� active_
+        _active = !_active;
 
-        if (active_) // ������� ���������� ������ �������� �� ����� ������
-            GetComponent<Image>().sprite = on_image;
+        if (_active)
+            GetComponent<Image>().sprite = _onImage;
         else
-            GetComponent<Image>().sprite = off_image;
+            GetComponent<Image>().sprite = _offImage;
 
-        GameEvents.OnNotesActiveMethod(active_); // ������� ����� ��� ����������� ��� ���� ����� �������
+        GameEvents.OnNotesActiveMethod(_active);
     }
 }

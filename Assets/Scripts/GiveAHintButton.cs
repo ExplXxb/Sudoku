@@ -1,25 +1,20 @@
-// ����, �� ���� ��������� ����� ������ "����� ������� �� �������� �������", ���������� ������������ �������� ������� �� ��� ���
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))] // ��������� �������� ���������� Button �� ����� ��'���
+[RequireComponent(typeof(Button))]
 public class GiveAHintButton : MonoBehaviour
 {
-    private Button button; // ��������� �� ������
+    private Button _button;
 
-    // �����, �� �����������, ���� ������� �������� ������������� ����� ������ �������� ����-����� ������ Update
-    void Start()
+    private void Start()
     {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(OnButtonClicked); // ��������� ��������� ��䳿 ���������� ������
-        button.interactable = true; // ����� �� ������� � �������
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(OnButtonClicked);
+        _button.interactable = true;
     }
 
-    // �����, �� ����������� ��� ��������� �� ������
     private void OnButtonClicked()
     {
-        AdsManager.Instance.ShowRewarded(GameEvents.OnGiveAHintMethod); // ��������� ����� ��� ������� �������
+        AdsManager.Instance.ShowRewarded(GameEvents.OnGiveAHintMethod);
     }
 }

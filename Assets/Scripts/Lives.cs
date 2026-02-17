@@ -1,102 +1,92 @@
-// ����, ������� �� ���� ������� ����� ������
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Lives : MonoBehaviour
 {
-    public List<GameObject> error_images; // ������ ��'���� (���������) �������
-    public List<GameObject> health_points_images;
-    public GameObject game_over_popup; // ��'��� (����) � ������������ ��� ���������� ���
+    [SerializeField] private List<GameObject> _errorImages;
+    [SerializeField] private List<GameObject> _healthPointsImages;
+    [SerializeField] private GameObject _gameOverPopup;
 
-    int lives_ = 0; // ������� ������� �����
-    int error_number_ = 0; // ʳ������ �������
-    public static Lives Instance; // ��������� ��������� ����� Lives ��� �������� �������
+    private int _lives = 0;
+    private int _errorNumber = 0;
+    public static Lives Instance { get; private set; }
 
-    // �����, �� ����������� �� ��� ������������ ���������� ����� GameSettings (Instance)
     private void Awake()
     {
-        if(Instance)
+        if (Instance)
             Destroy(Instance);
 
         Instance = this;
     }
 
-    // �����, �� �����������, ���� ������� �������� ������������� ����� ������ �������� ����-����� ������ Update
-    void Start()
+    private void Start()
     {
-        lives_ = error_images.Count;
-        error_number_ = 0;
+        _lives = _errorImages.Count;
+        _errorNumber = 0;
 
         if (GameSettings.Instance.GetContinuePreviousGame())
-        { // ���� ��������� ��� � ������ ���, �� ������� ������� ������� � �����
-            error_number_ = Config.ErrorNumber();
-            lives_ = error_images.Count - error_number_;
+        {
+            _errorNumber = Config.ErrorNumber();
+            _lives = _errorImages.Count - _errorNumber;
 
-            for (int error = 0; error < error_number_; error++)
+            for (int error = 0; error < _errorNumber; error++)
             {
-                error_images[error].SetActive(true);
-                health_points_images[error].SetActive(false);
+                _errorImages[error].SetActive(true);
+                _healthPointsImages[error].SetActive(false);
             }
         }
     }
 
-    // ������� ������� �������
     public int GetErrorNumbers()
     {
-        return error_number_;
+        return _errorNumber;
     }
 
-    // �������� ��䳿 ����� ������������� �����
+    public void ResetLives()
+    {
+        foreach (var error in _errorImages)
+        {
+            error.SetActive(false);
+        }
+
+        foreach (var hp in _healthPointsImages)
+        {
+            hp.SetActive(true);
+        }
+
+        _errorNumber = 0;
+        _lives = _errorImages.Count;
+    }
+
     private void WrongNumber()
     {
-        if (error_number_ < error_images.Count)
+        if (_errorNumber < _errorImages.Count)
         {
-            error_images[error_number_].SetActive(true);
-            health_points_images[error_number_].SetActive(false);
-            error_number_++;
-            lives_--;
+            _errorImages[_errorNumber].SetActive(true);
+            _healthPointsImages[_errorNumber].SetActive(false);
+            _errorNumber++;
+            _lives--;
         }
 
-        CheckForGameOver(); // ���������� �� �������
+        CheckForGameOver();
     }
 
-    // ��������, �� ���������� ����� � ������
     private void CheckForGameOver()
     {
-        if(lives_ <= 0)
+        if(_lives <= 0)
         {
             GameEvents.OnGameOverMethod();
-            game_over_popup.SetActive(true);
+            _gameOverPopup.SetActive(true);
         }
     }
 
-    // �������� ��������� �����
     private void OnEnable()
     {
         GameEvents.OnWrongNumber += WrongNumber;
     }
 
-    // �������� ����������� �����
     private void OnDisable()
     {
         GameEvents.OnWrongNumber -= WrongNumber;
-    }
-
-    // ����� ������� ������� �� ����������� �����
-    public void ResetLives()
-    {
-        foreach (var error in error_images)
-        {
-            error.SetActive(false);
-        }
-
-        foreach (var hp in health_points_images)
-        {
-            hp.SetActive(true);
-        }
-
-        error_number_ = 0;
-        lives_ = error_images.Count;
     }
 }

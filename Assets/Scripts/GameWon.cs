@@ -1,36 +1,29 @@
-// ����, �� ���� ��������� ����� ���������� ������ ���, ����������� ���� �������� �� �������� ��� ���.
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameWon : MonoBehaviour
 {
-    public GameObject WinPopup; // ³��� ��������
-    public Text ClockText; // �������� ���� ��� ����������� ���� ���
+    [SerializeField] private GameObject _winPopup;
+    [SerializeField] private Text _clockText;
 
-    // �����, �� �����������, ���� ������� �������� ������������� ����� ������ �������� ����-����� ������ Update
-    void Start()
+    private void Start()
     {
-        WinPopup.SetActive(false);
+        _winPopup.SetActive(false);
     }
 
-    // �����, �� ����������� ��� ��������� ���
     private void OnBoardCompleted()
     {
-        WinPopup.SetActive(true); // ������ ���� �������� �������� ��� ��������� ���
-        ClockText.text = Clock.Instance.GetCurrentTimeText().text; // ��������� ����� ���� �� ����� ��������
+        _winPopup.SetActive(true);
+        _clockText.text = Clock.Instance.GetCurrentTimeText().text;
     }
 
-    // �����, �� ����������� ��� ��������� ��'����
     private void OnEnable()
     {
-        GameEvents.OnBoardCompleted += OnBoardCompleted; // ϳ������ �� ���� ���������� ���
+        GameEvents.OnBoardCompleted += OnBoardCompleted;
     }
 
-    // �����, �� ����������� ��� ����������� ��'����
     private void OnDisable()
     {
-        GameEvents.OnBoardCompleted -= OnBoardCompleted; // ³������ �� ��䳿 ���������� ���
+        GameEvents.OnBoardCompleted -= OnBoardCompleted;
     }
 }

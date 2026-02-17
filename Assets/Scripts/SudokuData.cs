@@ -1,12 +1,10 @@
-// ���� ������ ��� ��� ����� ���� ��������� ������. ������ �������, ��� ������� ������ � ������ ������������� ������
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ��� ��� ���� ����� ���������
 public class SudokuEasyData : MonoBehaviour
 {
-    public static List<SudokuData.SudokuBoardData> getData()
+    public static List<SudokuData.SudokuBoardData> GetData()
     {
         List<SudokuData.SudokuBoardData> data = new List<SudokuData.SudokuBoardData>();
 
@@ -215,7 +213,6 @@ public class SudokuEasyData : MonoBehaviour
     }
 }
 
-// ��� ��� ���� �������� ���������
 public class SudokuMediumData : MonoBehaviour
 {
     public static List<SudokuData.SudokuBoardData> getData()
@@ -427,7 +424,6 @@ public class SudokuMediumData : MonoBehaviour
     }
 }
 
-// ��� ��� ���� ����� ���������
 public class SudokuHardData : MonoBehaviour
 {
     public static List<SudokuData.SudokuBoardData> getData()
@@ -639,7 +635,6 @@ public class SudokuHardData : MonoBehaviour
     }
 }
 
-// ��� ��� ���� ���� ����� ���������
 public class SudokuVeryHardData : MonoBehaviour
 {
     public static List<SudokuData.SudokuBoardData> getData()
@@ -853,26 +848,22 @@ public class SudokuVeryHardData : MonoBehaviour
 
 public class SudokuData : MonoBehaviour
 {
-    public static SudokuData Instance; // ��������� ��������� ����� SudokuData ��� �������� �������
+    public static SudokuData Instance { get; private set; }
 
-    // ��������� ��� ��������� ����� ��� ����� Sudoku
     public struct SudokuBoardData
     {
-        public int[] unsolved_data; // ����� ��� ��������� �� �������� ����� ������
-        public int[] solved_data; // ����� ��� ��������� �������� ������
+        public int[] unsolvedData;
+        public int[] solvedData;
 
-        // ����������� ��� ��������� SudokuBoardData
         public SudokuBoardData(int[] unsolved, int[] solved) : this()
         {  
-            this.unsolved_data = unsolved;  // ���������� ����� unsolved_data
-            this.solved_data = solved; // ���������� ����� solved_data
+            this.unsolvedData = unsolved; 
+            this.solvedData = solved;
         }
     };
 
-    // ������� ��� ��������� ����� ��� Sudoku ��� ����� ����
-    public Dictionary<string, List<SudokuBoardData>> sudoku_game = new Dictionary<string, List<SudokuBoardData>>();
+    public Dictionary<string, List<SudokuBoardData>> SudokuGame = new Dictionary<string, List<SudokuBoardData>>();
 
-    // �����, �� ����������� �� ��� ������������ ���������� ����� GameSettings (Instance)
     private void Awake()
     {
         if (Instance == null)
@@ -881,12 +872,11 @@ public class SudokuData : MonoBehaviour
             Destroy(this);
     }
 
-    // �����, �� �����������, ���� ������� �������� ������������� ����� ������ �������� ����-����� ������ Update
-    void Start()
+    private void Start()
     {
-        sudoku_game.Add("Easy", SudokuEasyData.getData());
-        sudoku_game.Add("Medium", SudokuMediumData.getData());
-        sudoku_game.Add("Hard", SudokuHardData.getData());
-        sudoku_game.Add("VeryHard", SudokuVeryHardData.getData());
+        SudokuGame.Add("Easy", SudokuEasyData.GetData());
+        SudokuGame.Add("Medium", SudokuMediumData.getData());
+        SudokuGame.Add("Hard", SudokuHardData.getData());
+        SudokuGame.Add("VeryHard", SudokuVeryHardData.getData());
     }
 }

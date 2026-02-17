@@ -3,24 +3,24 @@ using UnityEngine.UI;
 
 public class ContinueAfterGameOverButton : MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverPopup;
-    [SerializeField] private MenuButtons menuButtons;
+    [SerializeField] private GameObject GameOverPopup;
+    [SerializeField] private MenuButtons MenuButtons;
 
-    private Button button;
+    private Button _button;
 
-    void Start()
+    private void Start()
     {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(OnButtonClicked); // ��������� ��������� ��䳿 ���������� ������
-        button.interactable = true; // ����� �� ������� � �������
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(OnButtonClicked);
+        _button.interactable = true;
     }
 
     private void OnButtonClicked()
     {
         AdsManager.Instance.ShowRewarded(() =>
         {
-            gameOverPopup.SetActive(false);
-            menuButtons.ContinueAfterGameOver();
+            GameOverPopup.SetActive(false);
+            MenuButtons.ContinueAfterGameOver();
             Clock.Instance.StartClock();
         });
     }

@@ -1,13 +1,10 @@
-// ���� ������� �� ��������� ����������� ������, �� ����������� ��� � ���� ���, ��� � ������ ���������, ��� � ������ ������� 3�3
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LineIndicator : MonoBehaviour
 {
-    public static LineIndicator Instance; // ��������� ��������� ����� LineIndicator ��� �������� �������
+    public static LineIndicator Instance { get; private set; }
 
-    private int[,] line_data = new int[9, 9] // �����, �� ������ ������� ������� ��� ����� ������������� �� ����������� ���
+    private int[,] _lineData = new int[9, 9]
     {
         {   0,  1,  2,     3, 4, 5,     6, 7, 8   },
         {   9,10, 11,   12,13,14,   15,16,17  },
@@ -22,7 +19,7 @@ public class LineIndicator : MonoBehaviour
         {  72,73,74,  75,76,77,  78,79,80 }
     };
 
-    private int[] line_data_flat = new int[81] // ����������� ����� ������� �������, ������������ �� ��� ��� � ������� �������
+    private int[] _lineDataFlat = new int[81]
     {
            0,  1,  2,     3, 4, 5,     6, 7, 8,
            9,10, 11,   12,13,14,   15,16,17,
@@ -37,7 +34,7 @@ public class LineIndicator : MonoBehaviour
           72,73,74,  75,76,77,  78,79,80
     };
 
-    private int[,] square_data = new int[9, 9] // �����, �� ������ ������� ������� ��� ������� ��������
+    private int[,] _squareData = new int[9, 9]
     {
         {  0,  1,  2,     9, 10, 11,    18,19,20 },
         {  3,  4,  5,    12,13,14,    21,22,23 },
@@ -52,7 +49,6 @@ public class LineIndicator : MonoBehaviour
         { 60,61,62,   69,70,71,   78,79,80}
     };
 
-    // �����, �� ����������� �� ��� ������������ ���������� ����� GameSettings (Instance)
     private void Awake()
     {
         if(Instance == null)
@@ -62,85 +58,80 @@ public class LineIndicator : MonoBehaviour
 
     }
 
-    // ������� ������� (����� �� ��������) ������� �� �� �������� � ����� line_data
-    private (int, int) GetSquarePosition(int square_index)
-    {
-        int pos_row = -1;
-        int pos_col = -1;
-
-        for (int row = 0; row < 9; row++)
-        {
-            for (int col = 0; col < 9; col++)
-            {
-                if (line_data[row, col] == square_index)
-                {
-                    pos_row = row;
-                    pos_col = col;
-                }
-            }
-        }
-
-        return (pos_row, pos_col);
-    }
-
-    // ������� ����� ������� ������� � ������������� ���, �� ������ ������� � �������� ��������
-    public int[] GetHorizontalLine(int square_index)
+    public int[] GetHorizontalLine(int squareIndex)
     {
         int[] line = new int[9];
 
-        var square_position_row = GetSquarePosition(square_index).Item1;
-
-        for(int index = 0; index < 9; index++)
-        {
-            line[index] = line_data[square_position_row, index];
-        }
-
-        return line;
-    }
-
-    // ������� ����� ������� ������� � ����������� ���, �� ������ ������� � �������� ��������
-    public int[] GetVerticalLine(int square_index)
-    {
-        int[] line = new int[9];
-
-        var square_position_col = GetSquarePosition(square_index).Item2;
+        var squarePositionRow = GetSquarePosition(squareIndex).Item1;
 
         for (int index = 0; index < 9; index++)
         {
-            line[index] = line_data[index, square_position_col];
+            line[index] = _lineData[squarePositionRow, index];
         }
 
         return line;
     }
 
-    // ������� ����� ������� �������, �� �������� �� ��������, � ����� ����������� ������ � �������� ��������
-    public int[] GetSquare(int square_index)
+    public int[] GetVerticalLine(int squareIndex)
     {
         int[] line = new int[9];
-        int pos_row = -1;
+
+        var squarePositionCol = GetSquarePosition(squareIndex).Item2;
+
+        for (int index = 0; index < 9; index++)
+        {
+            line[index] = _lineData[index, squarePositionCol];
+        }
+
+        return line;
+    }
+
+    public int[] GetSquare(int squareIndex)
+    {
+        int[] line = new int[9];
+        int posRow = -1;
 
         for (int row = 0; row < 9; row++)
         {
             for (int col = 0; col < 9; col++)
             {
-                if (square_data[row, col] == square_index)
+                if (_squareData[row, col] == squareIndex)
                 {
-                    pos_row = row;
+                    posRow = row;
                 }
             }
         }
 
-        for(int index = 0; index < 9; index++)
+        for (int index = 0; index < 9; index++)
         {
-            line[index] = square_data[pos_row, index];
+            line[index] = _squareData[posRow, index];
         }
 
         return line;
     }
 
-    // ������� ����� ������� ��� ������� �� ��� ���
-    public int[] GetAllSquaresIndexes() 
+    public int[] GetAllSquaresIndexes()
     {
-        return line_data_flat;
+        return _lineDataFlat;
+    }
+
+    private (int, int) GetSquarePosition(int squareIndex)
+    {
+        int posRow = -1;
+        int posCol = -1;
+
+        for (int row = 0; row < 9; row++)
+        {
+            for (int col = 0; col < 9; col++)
+            {
+                if (_lineData[row, col] == squareIndex)
+                {
+                    posRow = row;
+                    posCol = col;
+                }
+            }
+        }
+
+        return (posRow, posCol);
     }
 }

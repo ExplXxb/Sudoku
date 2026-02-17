@@ -761,8 +761,8 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 6524291167649595245}
-  number_text: {fileID: 5969770081800059764}
-  number_notes:
+  _numberText: {fileID: 5969770081800059764}
+  _numberNotes:
   - {fileID: 2624809755800622850}
   - {fileID: 4270615939524294508}
   - {fileID: 6448609516988606255}
@@ -772,8 +772,8 @@ MonoBehaviour:
   - {fileID: 9129159219772143162}
   - {fileID: 5238466700734039723}
   - {fileID: 2557317219255974375}
-  defaultColor: {r: 0.85, g: 0.85, b: 0.85, a: 1}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  _defaultColor: {r: 0.750311, g: 1, b: 0.740566, a: 1}
+  _normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6448609516988606255
 GameObject:
   m_ObjectHideFlags: 0

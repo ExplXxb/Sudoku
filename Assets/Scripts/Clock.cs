@@ -1,24 +1,19 @@
-// ����, �� ������ �� ���������� �� ��������� ���� 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using JetBrains.Annotations;
 
 public class Clock : MonoBehaviour
 {
-    private int hours_ = 0; // ������
-    private int minutes_ = 0; // �������
-    private int seconds_ = 0; // �������
+    private int _hours = 0;
+    private int _minutes = 0;
+    private int _seconds = 0;
 
-    private Text textClock; // �������� ���� ��� ����������� ��������� �� �����
-    private float delta_time; // ������ �������� ��� � ��������
-    private bool stop_clock_ = false; // �� ����� �������� ��������
+    private Text _textClock;
+    private float _deltaTime;
+    private bool _stopClock = false;
 
-    public static Clock Instance; // ��������� �����
+    public static Clock Instance { get; private set; }
 
-    // �����, �� ����������� �� ��� ������������ ���������� ����� GameSettings (Instance)
     private void Awake()
     {
         if(Instance)
@@ -26,75 +21,66 @@ public class Clock : MonoBehaviour
 
         Instance = this;
 
-        textClock = GetComponent<Text>();
+        _textClock = GetComponent<Text>();
 
         if (GameSettings.Instance.GetContinuePreviousGame())
-            delta_time = Config.ReadGameTime();
+            _deltaTime = Config.ReadGameTime();
         else
-            delta_time = 0;
+            _deltaTime = 0;
     }
 
-    // �����, �� �����������, ���� ������� �������� ������������� ����� ������ �������� ����-����� ������ Update
-    void Start()
+    private void Start()
     {
-        stop_clock_ = false;
+        _stopClock = false;
     }
 
-    // �����, �� ����������� ������� �����, ���� �������� MonoBehaviour.
-    void Update()
+    private void Update()
     {
-        if(GameSettings.Instance.GetPaused() == false && stop_clock_ == false)
+        if(GameSettings.Instance.GetPaused() == false && _stopClock == false)
         {
-            delta_time += Time.deltaTime;
-            TimeSpan span = TimeSpan.FromSeconds(delta_time);
+            _deltaTime += Time.deltaTime;
+            TimeSpan span = TimeSpan.FromSeconds(_deltaTime);
 
             string hours = LeadingZero(span.Hours);
             string minutes = LeadingZero(span.Minutes);
             string seconds = LeadingZero(span.Seconds);
 
-            textClock.text = hours + ":" + minutes + ":" + seconds;
+            _textClock.text = hours + ":" + minutes + ":" + seconds;
         }
     }
 
-    // ������ ������� ����, ���� ����� ����� 10
-    string LeadingZero(int n)
+    public void OnGameOver()
+    {
+        _stopClock = true;
+    }
+
+    public static string GetCurrentTime()
+    {
+        return Instance._deltaTime.ToString();
+    }
+
+    public Text GetCurrentTimeText()
+    {
+        return _textClock;
+    }
+
+    public void StartClock()
+    {
+        _stopClock = false;
+    }
+
+    private string LeadingZero(int n)
     {
         return n.ToString().PadLeft(2, '0');
     }
 
-    // ����������� ��� ��������� ���, �� ���, ������ ������� ��������
-    public void OnGameOver()
-    {
-        stop_clock_ = true; 
-    }
-
-    // ϳ��������� �� ���� ���������� ���
     private void OnEnable()
     {
         GameEvents.OnGameOver += OnGameOver;
     }
 
-    // ³��������� �� ��䳿 ���������� ���
     private void OnDisable()
     {
         GameEvents.OnGameOver -= OnGameOver;
-    }
-
-    // �������� �������� ��� � ������ �����
-    public static string GetCurrentTime()
-    {
-        return Instance.delta_time.ToString();
-    }
-
-    // �������� �������� ����������� ��������� ����
-    public Text GetCurrentTimeText()
-    {
-        return textClock;
-    }
-
-    // ��������� ��������
-    public void StartClock()
-    {
-        stop_clock_ = false;
     }
 }

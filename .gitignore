@@ -73,3 +73,22 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# ──────────────────────────────────────────
+# Project-specific additions
+# ──────────────────────────────────────────
+
+# Crash logs
+hs_err_pid*.log
+
+# Local data files
+board.data.ini
+structure.txt
+
+# Auto-recovery scenes (Unity-generated, not source)
+Assets/_Recovery/
+Assets/_Recovery.meta
+
+# Large archive
+Assets/Game.7z
+Assets/Game.7z.meta

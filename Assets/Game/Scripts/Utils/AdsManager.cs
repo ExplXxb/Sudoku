@@ -48,6 +48,30 @@ public class AdsManager : MonoBehaviour
         bannerView.LoadAd(new AdRequest());
     }
 
+    public void ShowBanner()
+    {
+        if (bannerView != null)
+        {
+            bannerView.Destroy();
+            bannerView = null;
+        }
+
+        int width = MobileAds.Utils.GetDeviceSafeWidth();
+        AdSize size = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(width);
+
+        bannerView = new BannerView(BANNER_ID, size, AdPosition.Top);
+        bannerView.LoadAd(new AdRequest());
+    }
+
+    public void HideBanner()
+    {
+        if (bannerView != null)
+        {
+            bannerView.Destroy();
+            bannerView = null;
+        }
+    }
+
     private void LoadRewardedAd()
     {
         var request = new AdRequest();

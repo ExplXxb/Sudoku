@@ -18,6 +18,8 @@ public class SudokuGameState : MonoBehaviour
             LoadGame();
         else
             StartGame();
+
+        AdsManager.Instance.ShowBanner();
     }
 
     private void OnEnable()

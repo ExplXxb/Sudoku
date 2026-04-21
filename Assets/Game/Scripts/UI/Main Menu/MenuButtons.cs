@@ -3,6 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour
 {
+    private void Start()
+    {
+        AdsManager.Instance.HideBanner();
+    }
+
     public void LoadScene(string name)
     {
         SceneManager.LoadScene(name);

@@ -6,7 +6,6 @@ public class GameSettings : MonoBehaviour
 
     private DifficultyData _difficulty;
     private bool _continuePreviousGame = false;
-    private bool _exitAfterWon = false;
     private bool _paused = false;
 
     private void Awake()
@@ -20,7 +19,7 @@ public class GameSettings : MonoBehaviour
         }
         else
         {
-            Destroy(Instance);
+            Destroy(this);
         }
     }
 
@@ -32,17 +31,6 @@ public class GameSettings : MonoBehaviour
     public DifficultyData GetDifficulty()
     {
         return _difficulty;
-    }
-
-    public void SetExitAfterWon(bool set)
-    {
-        _exitAfterWon = set;
-        _continuePreviousGame = false;
-    }
-
-    public bool GetExitAfterWon()
-    {
-        return _exitAfterWon;
     }
 
     public void SetContinuePreviousGame(bool continueGame)

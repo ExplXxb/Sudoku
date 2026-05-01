@@ -231,11 +231,16 @@ public class SudokuGameState : MonoBehaviour
         }
         else
         {
-            cell.SetValue(number);
-
-            if (number != 0 && cell.IsCorrect() == false)
+            if (cell.Value == number)
+                cell.Clear();
+            else
             {
-                GameEvents.OnWrongNumberMethod();
+                cell.SetValue(number);
+
+                if (number != 0 && cell.IsCorrect() == false)
+                {
+                    GameEvents.OnWrongNumberMethod();
+                }
             }
         }
 

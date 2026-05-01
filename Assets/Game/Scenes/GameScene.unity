@@ -754,20 +754,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 512340588}
         m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: MainMenu
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 512340588}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: SetPause
-        m_Mode: 6
+        m_MethodName: ExitToMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1359,7 +1347,6 @@ GameObject:
   - component: {fileID: 512340584}
   - component: {fileID: 512340587}
   - component: {fileID: 512340588}
-  - component: {fileID: 512340589}
   - component: {fileID: 512340590}
   - component: {fileID: 512340593}
   - component: {fileID: 512340592}
@@ -1475,18 +1462,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ccb4027e09d314481b8a1b6cb77d5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &512340589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 512340583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aed462d912b5f0b408c77f61184190fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &512340590
@@ -4049,19 +4024,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 512340588}
         m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: MainMenu
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 512340588}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: ExitAfterWon
+        m_MethodName: ExitGameWonOrOver
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5360,19 +5323,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 512340588}
         m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: MainMenu
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 512340588}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: ExitAfterWon
+        m_MethodName: ExitGameWonOrOver
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

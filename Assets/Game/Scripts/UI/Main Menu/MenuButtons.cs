@@ -33,8 +33,17 @@ public class MenuButtons : MonoBehaviour
         GameSettings.Instance.SetContinuePreviousGame(continueGame);
     }
 
-    public void ExitAfterWon()
-    {                                                                                   
-        GameSettings.Instance.SetExitAfterWon(true);
-    }                                                                               
+    public void ExitGameWonOrOver()
+    {
+        ExitToMenu();
+        GameSettings.Instance.SetContinuePreviousGame(false);
+    }
+
+    public void ExitToMenu()
+    {
+        GameEvents.OnExitToMenuMethod();
+        GameSettings.Instance.SetPaused(false);
+        GameSettings.Instance.SetContinuePreviousGame(true);
+        SceneManager.LoadScene("MainMenu");
+    }
 }

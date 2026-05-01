@@ -72,4 +72,11 @@ public class GameEvents
     {
         OnGiveAHintOpening?.Invoke();
     }
+
+    public static event Action OnExitToMenu;
+
+    public static void OnExitToMenuMethod()
+    {
+        OnExitToMenu?.Invoke();
+    }
 }

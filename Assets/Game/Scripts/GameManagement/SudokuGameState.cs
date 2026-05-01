@@ -32,6 +32,7 @@ public class SudokuGameState : MonoBehaviour
         GameEvents.OnGameOver += DeleteSave;
         GameEvents.OnBoardCompleted += DeleteSave;
         GameEvents.OnGiveAHint += SaveGame;
+        GameEvents.OnExitToMenu += HandleExitToMenu;
     }
 
     private void OnDisable()
@@ -44,6 +45,7 @@ public class SudokuGameState : MonoBehaviour
         GameEvents.OnGameOver -= DeleteSave;
         GameEvents.OnBoardCompleted -= DeleteSave;
         GameEvents.OnGiveAHint -= SaveGame;
+        GameEvents.OnExitToMenu -= HandleExitToMenu;
     }
 
     private void OnApplicationPause(bool pause)
@@ -74,6 +76,12 @@ public class SudokuGameState : MonoBehaviour
 
     public void SaveGame()
     {
+        if (_board == null)
+            return;
+
+        if (LivesView.Instance.LivesCount <= 0)
+            return;
+
         SudokuSaveData data = new SudokuSaveData();
 
         data.size = _board.Size;
@@ -160,6 +168,11 @@ public class SudokuGameState : MonoBehaviour
     public void DeleteSave()
     {
         SaveLoadData.Delete(SaveKey);
+    }
+
+    private void HandleExitToMenu()
+    {
+        SaveGame();
     }
 
     private void SelectCell(int index)

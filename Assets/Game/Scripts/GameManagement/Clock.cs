@@ -16,8 +16,11 @@ public class Clock : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance)
-            Destroy(Instance);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
 
         Instance = this;
 

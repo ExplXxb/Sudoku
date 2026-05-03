@@ -15,6 +15,7 @@ public class PauseMenu : MonoBehaviour
     public void Show()
     {
         _pausePopup.SetActive(true);
+        SetTime();
     }
 
     public void Hide()

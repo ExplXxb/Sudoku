@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7a5b6bfa2d3efbc43852c68a79285d20
+guid: d5c1f07ecf95f054eb2583e6eab52ae8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -730617865871833459
-    second: start_button_lg_0
+      213: -3743962767823755276
+    second: hard_diff_button_lg4_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: start_button_lg_0
+      name: hard_diff_button_lg4_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d86c7260ce25cd5f0800000000000000
-      internalID: -730617865871833459
+      spriteID: 4f7a393f2b5ca0cc0800000000000000
+      internalID: -3743962767823755276
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      start_button_lg_0: -730617865871833459
+      hard_diff_button_lg4_0: -3743962767823755276
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

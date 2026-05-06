@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 130977f06ddee8c4e85e293e0e322da6
+guid: 0baffec271372da498a55828cf17325b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -873783727349410980
-    second: pixdoku_icon_lg_0
+      213: 7731795031127490178
+    second: easy_diff_button_lg3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pixdoku_icon_lg_0
+      name: easy_diff_button_lg3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 44
-        height: 44
+        width: 80
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c5352d85452bfd3f0800000000000000
-      internalID: -873783727349410980
+      spriteID: 28efb72bd9adc4b60800000000000000
+      internalID: 7731795031127490178
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      pixdoku_icon_lg_0: -873783727349410980
+      easy_diff_button_lg3_0: 7731795031127490178
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

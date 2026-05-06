@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b70064c72ca85aa4bb3930c6c342e8e2
+guid: 90321eaa5d38cfa438a9f46cb1f5f989
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 313862856685069254
-    second: undo_button_lg_0
+      213: 6136666353544652419
+    second: pixdoku_icon_hg_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: undo_button_lg_0
+      name: pixdoku_icon_hg_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 21
-        height: 21
+        width: 880
+        height: 880
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6c327e0fa901b5400800000000000000
-      internalID: 313862856685069254
+      spriteID: 386ee1cf881d92550800000000000000
+      internalID: 6136666353544652419
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3a797a886be48384a84f999f867e60b5
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -146,11 +146,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      undo_button_lg_0: 313862856685069254
+      pixdoku_icon_hg_0: 6136666353544652419
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

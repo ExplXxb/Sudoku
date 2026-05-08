@@ -274,6 +274,12 @@ public class SudokuGameState : MonoBehaviour
 
     private void GiveAHint()
     {
+        if (_selectedIndex < 0)
+        {
+            GiveRandomHint();
+            return;
+        }
+
         int size = _board.Size;
 
         int row = _selectedIndex / size;
@@ -283,24 +289,37 @@ public class SudokuGameState : MonoBehaviour
 
         if (cell.IsDefault || cell.IsCorrect() || _selectedIndex < 0)
         {
-            System.Random rng = new System.Random();
-
-            int index = 0;
-
-            while (cell.IsDefault || cell.IsCorrect())
-            {
-                index = rng.Next(size);
-
-                row = index / size;
-                column = index % size;
-
-                cell = _board.GetCell(row, column);
-            }
+            GiveRandomHint();
+            return;
         }
 
         cell.SetValue(cell.CorrectValue);
 
         _gridView.Draw(_board, _selectedIndex);
+    }
+
+    private void GiveRandomHint()
+    {
+        int size = _board.Size;
+        System.Random rng = new System.Random();
+
+        int index;
+        SudokuCell cell;
+
+        do
+        {
+            index = rng.Next(size * size);
+
+            int row = index / size;
+            int column = index % size;
+
+            cell = _board.GetCell(row, column);
+
+        } while (cell.IsDefault || cell.IsCorrect());
+
+        cell.SetValue(cell.CorrectValue);
+
+        _gridView.Draw(_board, -1);
     }
 
     private void SetNotesMode(bool active)

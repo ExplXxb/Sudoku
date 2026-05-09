@@ -329,9 +329,36 @@ public class SudokuGameState : MonoBehaviour
 
     public void DebugSolveButton()
     {
+        SudokuCell lastUnsolved = null;
+
         for (int i = 0; i < _board.Size; i++)
-            for (int j = 0; j < _board.Size; j ++)
-                _board.GetCell(i, j).SetValue(_board.GetCell(i, j).CorrectValue);
+        {
+            for (int j = 0; j < _board.Size; j++)
+            {
+                var cell = _board.GetCell(i, j);
+
+                if (!cell.IsDefault && cell.Value != cell.CorrectValue)
+                {
+                    lastUnsolved = cell;
+                    break;
+                }
+            }
+            if (lastUnsolved != null)
+                break;
+        }
+
+        for (int i = 0; i < _board.Size; i++)
+        {
+            for (int j = 0; j < _board.Size; j++)
+            {
+                var cell = _board.GetCell(i, j);
+
+                if (cell == lastUnsolved)
+                    continue;
+
+                cell.SetValue(cell.CorrectValue);
+            }
+        }
 
         _gridView.Draw(_board, _selectedIndex);
     }

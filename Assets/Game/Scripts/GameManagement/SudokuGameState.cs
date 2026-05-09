@@ -296,30 +296,42 @@ public class SudokuGameState : MonoBehaviour
         cell.SetValue(cell.CorrectValue);
 
         _gridView.Draw(_board, _selectedIndex);
+
+        if (IsBoardCompleted())
+        {
+            GameEvents.OnBoardCompletedMethod();
+        }
     }
 
     private void GiveRandomHint()
     {
         int size = _board.Size;
-        System.Random rng = new System.Random();
+        List<SudokuCell> availableCells = new List<SudokuCell>();
 
-        int index;
-        SudokuCell cell;
-
-        do
+        for (int i = 0; i < size; i++)
         {
-            index = rng.Next(size * size);
+            for (int j = 0; j < size; j++)
+            {
+                var currentCell = _board.GetCell(i, j);
 
-            int row = index / size;
-            int column = index % size;
+                if (!currentCell.IsDefault && !currentCell.IsCorrect())
+                    availableCells.Add(currentCell);
+            }
+        }
 
-            cell = _board.GetCell(row, column);
+        if (availableCells.Count == 0)
+        {
+            CheckBoardCompleted();
+            return;
+        }
 
-        } while (cell.IsDefault || cell.IsCorrect());
+        var randomCell = availableCells[new System.Random().Next(availableCells.Count)];
 
-        cell.SetValue(cell.CorrectValue);
+        randomCell.SetValue(randomCell.CorrectValue);
 
         _gridView.Draw(_board, -1);
+
+        CheckBoardCompleted();
     }
 
     private void SetNotesMode(bool active)
@@ -361,5 +373,13 @@ public class SudokuGameState : MonoBehaviour
         }
 
         _gridView.Draw(_board, _selectedIndex);
+    }
+
+    private void CheckBoardCompleted()
+    {
+        if (IsBoardCompleted())
+        {
+            GameEvents.OnBoardCompletedMethod();
+        }
     }
 }

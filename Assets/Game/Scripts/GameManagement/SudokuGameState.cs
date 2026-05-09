@@ -248,10 +248,7 @@ public class SudokuGameState : MonoBehaviour
 
         SaveGame();
 
-        if (IsBoardCompleted())
-        {
-            GameEvents.OnBoardCompletedMethod();
-        }
+        CheckBoardCompleted();
     }
 
     private bool IsBoardCompleted()
@@ -297,10 +294,7 @@ public class SudokuGameState : MonoBehaviour
 
         _gridView.Draw(_board, _selectedIndex);
 
-        if (IsBoardCompleted())
-        {
-            GameEvents.OnBoardCompletedMethod();
-        }
+        CheckBoardCompleted();
     }
 
     private void GiveRandomHint()

@@ -14,7 +14,7 @@ public class SudokuGameState : MonoBehaviour
 
     private void Start()
     {
-        if (GameSettings.Instance.GetContinuePreviousGame())
+        if (GameSettings.Instance.GetContinuePreviousGame() && SaveLoadData.Exists(SaveKey))
             LoadGame();
         else
             StartGame();
@@ -168,6 +168,7 @@ public class SudokuGameState : MonoBehaviour
     public void DeleteSave()
     {
         SaveLoadData.Delete(SaveKey);
+        GameSettings.Instance.SetContinuePreviousGame(false);
     }
 
     private void HandleExitToMenu()

@@ -24,4 +24,9 @@ public static class SaveLoadData
         PlayerPrefs.DeleteKey(key);
         PlayerPrefs.Save();
     }
+
+    public static bool Exists(string key)
+    {
+        return PlayerPrefs.HasKey(key);
+    }
 }

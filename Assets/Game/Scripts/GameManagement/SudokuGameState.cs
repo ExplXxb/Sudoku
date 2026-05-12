@@ -30,9 +30,7 @@ public class SudokuGameState : MonoBehaviour
         GameEvents.OnGiveAHint += GiveAHint;
         GameEvents.OnNotesActive += SetNotesMode;
         GameEvents.OnGameOver += DeleteSave;
-        GameEvents.OnBoardCompleted += DeleteSave;
-        GameEvents.OnGiveAHint += SaveGame;
-        GameEvents.OnExitToMenu += HandleExitToMenu;
+        GameEvents.OnExitToMenu += SaveGame;
     }
 
     private void OnDisable()
@@ -43,9 +41,7 @@ public class SudokuGameState : MonoBehaviour
         GameEvents.OnGiveAHint -= GiveAHint;
         GameEvents.OnNotesActive -= SetNotesMode;
         GameEvents.OnGameOver -= DeleteSave;
-        GameEvents.OnBoardCompleted -= DeleteSave;
-        GameEvents.OnGiveAHint -= SaveGame;
-        GameEvents.OnExitToMenu -= HandleExitToMenu;
+        GameEvents.OnExitToMenu -= SaveGame;
     }
 
     private void OnApplicationPause(bool pause)
@@ -171,11 +167,6 @@ public class SudokuGameState : MonoBehaviour
         GameSettings.Instance.SetContinuePreviousGame(false);
     }
 
-    private void HandleExitToMenu()
-    {
-        SaveGame();
-    }
-
     private void SelectCell(int index)
     {
         if (_board == null)
@@ -204,6 +195,8 @@ public class SudokuGameState : MonoBehaviour
             return;
 
         cell.Clear();
+
+        SaveGame();
 
         _gridView.Draw(_board, _selectedIndex);
     }
@@ -285,13 +278,15 @@ public class SudokuGameState : MonoBehaviour
 
         var cell = _board.GetCell(row, column);
 
-        if (cell.IsDefault || cell.IsCorrect() || _selectedIndex < 0)
+        if (cell.IsDefault || cell.IsCorrect())
         {
             GiveRandomHint();
             return;
         }
 
         cell.SetValue(cell.CorrectValue);
+
+        SaveGame();
 
         _gridView.Draw(_board, _selectedIndex);
 
@@ -323,6 +318,8 @@ public class SudokuGameState : MonoBehaviour
         var randomCell = availableCells[new System.Random().Next(availableCells.Count)];
 
         randomCell.SetValue(randomCell.CorrectValue);
+
+        SaveGame();
 
         _gridView.Draw(_board, -1);
 
@@ -374,6 +371,7 @@ public class SudokuGameState : MonoBehaviour
     {
         if (IsBoardCompleted())
         {
+            DeleteSave();
             GameEvents.OnBoardCompletedMethod();
         }
     }

@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class GameEvents
 {
+    public static Action OnUndo;
+
+    public static void OnUndoMethod()
+    {
+        OnUndo?.Invoke();
+    }
+
     public static event Action OnCheckBoardCompleted;
 
     public static void CheckBoardCompletedMethod()

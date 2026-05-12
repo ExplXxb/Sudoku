@@ -7,10 +7,12 @@ public class SudokuGameState : MonoBehaviour
 
     [SerializeField] private SudokuGridView _gridView;
 
+    private System.Random _rng = new System.Random();
     private SudokuBoard _board;
     private SudokuCell _selectedCell;
     private int _selectedIndex = -1;
     private bool _notesMode = false;
+    private Stack<Move> _history = new Stack<Move>();
 
     private void Start()
     {
@@ -31,6 +33,7 @@ public class SudokuGameState : MonoBehaviour
         GameEvents.OnNotesActive += SetNotesMode;
         GameEvents.OnGameOver += DeleteSave;
         GameEvents.OnExitToMenu += SaveGame;
+        GameEvents.OnUndo += Undo;
     }
 
     private void OnDisable()
@@ -42,6 +45,7 @@ public class SudokuGameState : MonoBehaviour
         GameEvents.OnNotesActive -= SetNotesMode;
         GameEvents.OnGameOver -= DeleteSave;
         GameEvents.OnExitToMenu -= SaveGame;
+        GameEvents.OnUndo -= Undo;
     }
 
     private void OnApplicationPause(bool pause)
@@ -58,6 +62,8 @@ public class SudokuGameState : MonoBehaviour
     public void StartGame()
     {
         LivesView.Instance.SetLives(LivesView.MaxLivesCount);
+
+        _history.Clear();
 
         var difficulty = GameSettings.Instance.GetDifficulty();
 
@@ -84,6 +90,15 @@ public class SudokuGameState : MonoBehaviour
         data.time = Clock.Instance.GetTime();
         data.lives = LivesView.Instance.LivesCount;
         data.difficultyName = GameSettings.Instance.GetDifficulty().Name;
+
+        var historyList = new List<Move>();
+
+        foreach (var move in _history)
+        {
+            historyList.Add(move.Clone());
+        }
+
+        data.history = historyList;
 
         data.cells = new List<CellSaveData>();
 
@@ -113,6 +128,16 @@ public class SudokuGameState : MonoBehaviour
         Clock.Instance.SetTime(data.time);
         LivesView.Instance.SetLives(data.lives);
 
+        var historyList = data.history ?? new List<Move>();
+
+        historyList.Reverse();
+
+        _history = new Stack<Move>();
+
+        foreach (var move in historyList)
+        {
+            _history.Push(move.Clone());
+        }
 
         int size = data.size;
 
@@ -167,6 +192,32 @@ public class SudokuGameState : MonoBehaviour
         GameSettings.Instance.SetContinuePreviousGame(false);
     }
 
+    private void Undo()
+    {
+        if (_history.Count == 0)
+            return;
+
+        var move = _history.Pop();
+
+        var cell = _board.GetCell(move.Row, move.Col);
+
+        cell.SetValue(move.PreviousValue);
+
+        cell.ClearNotes();
+
+        for (int i = 0; i < move.PreviousNotes.Length; i++)
+        {
+            if (move.PreviousNotes[i])
+                cell.AddNote(i + 1);
+        }
+
+        _gridView.Draw(_board, _selectedIndex);
+
+        SaveGame();
+
+        CheckBoardCompleted();
+    }
+
     private void SelectCell(int index)
     {
         if (_board == null)
@@ -191,10 +242,23 @@ public class SudokuGameState : MonoBehaviour
 
         var cell = _board.GetCell(row, column);
 
-        if (cell.IsDefault)
+        if (cell.IsDefault || cell.IsCorrect())
             return;
 
+        var move = new Move
+        {
+            Row = row,
+            Col = column,
+            PreviousValue = cell.Value,
+            PreviousNotes = (bool[])cell.GetNotes().Clone()
+        };
+
         cell.Clear();
+
+        move.NewValue = cell.Value;
+        move.NewNotes = (bool[])cell.GetNotes().Clone();
+
+        _history.Push(move);
 
         SaveGame();
 
@@ -213,8 +277,16 @@ public class SudokuGameState : MonoBehaviour
 
         var cell = _board.GetCell(row, column);
 
-        if (cell.IsDefault)
+        if (cell.IsDefault || cell.IsCorrect())
             return;
+
+        var move = new Move
+        {
+            Row = row,
+            Col = column,
+            PreviousValue = cell.Value,
+            PreviousNotes = (bool[])cell.GetNotes().Clone()
+        };
 
         if (_notesMode)
         {
@@ -237,6 +309,16 @@ public class SudokuGameState : MonoBehaviour
                 }
             }
         }
+
+        move.NewValue = cell.Value;
+        move.NewNotes = (bool[])cell.GetNotes().Clone();
+
+        if (move.PreviousValue == move.NewValue && NotesEqual(move.PreviousNotes, move.NewNotes))
+        {
+            return;
+        }
+
+        _history.Push(move);
 
         _gridView.Draw(_board, _selectedIndex);
 
@@ -263,6 +345,26 @@ public class SudokuGameState : MonoBehaviour
         return true;
     }
 
+    private bool NotesEqual(bool[] a, bool[] b)
+    {
+        if (a == null && b == null)
+            return true;
+
+        if (a == null || b == null)
+            return false;
+
+        if (a.Length != b.Length)
+            return false;
+
+        for (int i = 0; i < a.Length; i++)
+        {
+            if (a[i] != b[i])
+                return false;
+        }
+
+        return true;
+    }
+
     private void GiveAHint()
     {
         if (_selectedIndex < 0)
@@ -284,7 +386,20 @@ public class SudokuGameState : MonoBehaviour
             return;
         }
 
+        var move = new Move
+        {
+            Row = row,
+            Col = column,
+            PreviousValue = cell.Value,
+            PreviousNotes = (bool[])cell.GetNotes().Clone()
+        };
+
         cell.SetValue(cell.CorrectValue);
+
+        move.NewValue = cell.Value;
+        move.NewNotes = (bool[])cell.GetNotes().Clone();
+
+        _history.Push(move);
 
         SaveGame();
 
@@ -296,7 +411,8 @@ public class SudokuGameState : MonoBehaviour
     private void GiveRandomHint()
     {
         int size = _board.Size;
-        List<SudokuCell> availableCells = new List<SudokuCell>();
+
+        var availableCells = new List<(int row, int col, SudokuCell cell)>();
 
         for (int i = 0; i < size; i++)
         {
@@ -305,7 +421,7 @@ public class SudokuGameState : MonoBehaviour
                 var currentCell = _board.GetCell(i, j);
 
                 if (!currentCell.IsDefault && !currentCell.IsCorrect())
-                    availableCells.Add(currentCell);
+                    availableCells.Add((i, j, currentCell));
             }
         }
 
@@ -315,9 +431,22 @@ public class SudokuGameState : MonoBehaviour
             return;
         }
 
-        var randomCell = availableCells[new System.Random().Next(availableCells.Count)];
+        var picked = availableCells[_rng.Next(availableCells.Count)];
 
-        randomCell.SetValue(randomCell.CorrectValue);
+        var move = new Move
+        {
+            Row = picked.row,
+            Col = picked.col,
+            PreviousValue = picked.cell.Value,
+            PreviousNotes = (bool[])picked.cell.GetNotes().Clone()
+        };
+
+        picked.cell.SetValue(picked.cell.CorrectValue);
+
+        move.NewValue = picked.cell.Value;
+        move.NewNotes = (bool[])picked.cell.GetNotes().Clone();
+
+        _history.Push(move);
 
         SaveGame();
 

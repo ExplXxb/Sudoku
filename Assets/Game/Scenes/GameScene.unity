@@ -1436,6 +1436,7 @@ GameObject:
   - component: {fileID: 512340593}
   - component: {fileID: 512340592}
   - component: {fileID: 512340591}
+  - component: {fileID: 512340594}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -1604,6 +1605,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOverMenu
   _gameOverPopup: {fileID: 2105767206}
   _time: {fileID: 851196089}
+--- !u!114 &512340594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512340583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57db445f310782645a41fe9b684eb625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UndoButton
 --- !u!1 &545486373
 GameObject:
   m_ObjectHideFlags: 0
@@ -3410,7 +3423,7 @@ GameObject:
   - component: {fileID: 1148120033}
   - component: {fileID: 1148120032}
   m_Layer: 5
-  m_Name: Back
+  m_Name: UndoButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3479,22 +3492,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 512340588}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: MainMenu
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 512340588}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: SetPause
-        m_Mode: 6
+      - m_Target: {fileID: 512340594}
+        m_TargetAssemblyTypeName: UndoButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4131,7 +4132,7 @@ GameObject:
   - component: {fileID: 1509543384}
   - component: {fileID: 1509543383}
   m_Layer: 5
-  m_Name: Pause
+  m_Name: PauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5460,7 +5461,7 @@ GameObject:
   - component: {fileID: 1944386463}
   - component: {fileID: 1944386465}
   m_Layer: 5
-  m_Name: Rubber
+  m_Name: RubberButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

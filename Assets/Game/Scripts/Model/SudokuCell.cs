@@ -17,7 +17,7 @@ public class SudokuCell
 
     public void SetValue(int value)
     {
-        if (IsDefault || IsCorrect()) return;
+        if (IsDefault) return;
 
         Value = value;
 
@@ -27,7 +27,7 @@ public class SudokuCell
 
     public void Clear()
     {
-        if (IsDefault || IsCorrect()) return;
+        if (IsDefault) return;
 
         Value = 0;
         ClearNotes();

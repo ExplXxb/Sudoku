@@ -9,4 +9,5 @@ public class SudokuSaveData
     public int errors;
     public int lives;
     public List<CellSaveData> cells;
+    public List<Move> history;
 }

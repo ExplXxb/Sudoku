@@ -25,6 +25,22 @@ public class SudokuCell
             ClearNotes();
     }
 
+    public void ForceSetValue(int value, bool[] notes)
+    {
+        Value = value;
+
+        ClearNotes();
+
+        if (notes != null)
+        {
+            for (int i = 0; i < notes.Length; i++)
+            {
+                if (notes[i])
+                    _notes[i] = true;
+            }
+        }
+    }
+
     public void Clear()
     {
         if (IsDefault) return;

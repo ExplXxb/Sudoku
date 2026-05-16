@@ -10,4 +10,5 @@ public class SudokuSaveData
     public int lives;
     public List<CellSaveData> cells;
     public List<Move> history;
+    public List<Move> redoHistory;
 }

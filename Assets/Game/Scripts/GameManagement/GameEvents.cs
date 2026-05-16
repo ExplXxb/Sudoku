@@ -10,6 +10,13 @@ public class GameEvents
         OnUndo?.Invoke();
     }
 
+    public static Action OnRedo;
+
+    public static void OnRedoMethod()
+    {
+        OnRedo?.Invoke();
+    }
+
     public static event Action OnCheckBoardCompleted;
 
     public static void CheckBoardCompletedMethod()

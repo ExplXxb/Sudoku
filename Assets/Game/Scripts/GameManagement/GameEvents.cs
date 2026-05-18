@@ -3,6 +3,27 @@ using UnityEngine;
 
 public class GameEvents
 {
+    public static event Action OnToggleInputMode;
+
+    public static void OnToggleInputModeMethod()
+    {
+        OnToggleInputMode?.Invoke();
+    }
+
+    public static event Action<bool> OnInputModeChanged;
+
+    public static void OnInputModeChangedMethod(bool numberFirst)
+    {
+        OnInputModeChanged?.Invoke(numberFirst);
+    }
+
+    public static event Action<int> OnNumberSelected;
+
+    public static void OnNumberSelectedMethod(int number)
+    {
+        OnNumberSelected?.Invoke(number);
+    }
+
     public static Action OnUndo;
 
     public static void OnUndoMethod()

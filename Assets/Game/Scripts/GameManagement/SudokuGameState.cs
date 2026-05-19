@@ -15,6 +15,17 @@ public class SudokuGameState : MonoBehaviour
     private Stack<Move> _history = new Stack<Move>();
     private Stack<Move> _redoHistory = new Stack<Move>();
 
+    private enum InputMode
+    {
+        CellFirst,
+        NumberFirst
+    }
+
+    private InputMode _inputMode = InputMode.CellFirst;
+    public bool IsNumberFirstMode() { return _inputMode == InputMode.NumberFirst; }
+
+    private int _selectedNumber = 0;
+
     private void Start()
     {
         if (GameSettings.Instance.GetContinuePreviousGame() && SaveLoadData.Exists(SaveKey))
@@ -36,6 +47,7 @@ public class SudokuGameState : MonoBehaviour
         GameEvents.OnExitToMenu += SaveGame;
         GameEvents.OnUndo += Undo;
         GameEvents.OnRedo += Redo;
+        GameEvents.OnToggleInputMode += ToggleInputMode;
     }
 
     private void OnDisable()
@@ -49,6 +61,7 @@ public class SudokuGameState : MonoBehaviour
         GameEvents.OnExitToMenu -= SaveGame;
         GameEvents.OnUndo -= Undo;
         GameEvents.OnRedo -= Redo;
+        GameEvents.OnToggleInputMode -= ToggleInputMode;
     }
 
     private void OnApplicationPause(bool pause)
@@ -261,11 +274,24 @@ public class SudokuGameState : MonoBehaviour
         if (_board == null)
             return;
 
+        if (_inputMode == InputMode.NumberFirst && _selectedNumber == 0)
+            return;
+
         if (_selectedIndex != -1)
             _gridView.SetSelected(_selectedIndex, false);
 
-        _selectedIndex = index;
-        _gridView.SetSelected(_selectedIndex, true);
+        if (_inputMode == InputMode.NumberFirst && _selectedNumber != 0)
+        {
+            _selectedIndex = index;
+            ApplyNumber(_selectedNumber);
+            _selectedIndex = -1;
+            _gridView.Draw(_board, -1);
+        }
+        else
+        {
+            _selectedIndex = index;
+            _gridView.SetSelected(_selectedIndex, true);
+        }
     }
 
     private void ClearSelected()
@@ -297,7 +323,33 @@ public class SudokuGameState : MonoBehaviour
         _gridView.Draw(_board, _selectedIndex);
     }
 
+    private void ToggleInputMode()
+    {
+        _inputMode = _inputMode == InputMode.CellFirst
+            ? InputMode.NumberFirst
+            : InputMode.CellFirst;
+
+        _selectedNumber = 0;
+        _selectedIndex = -1;
+
+        _gridView.Draw(_board, _selectedIndex);
+
+        GameEvents.OnInputModeChangedMethod(_inputMode == InputMode.NumberFirst);
+    }
+
     private void SetNumber(int number)
+    {
+        if (_inputMode == InputMode.NumberFirst)
+        {
+            _selectedNumber = number;
+            GameEvents.OnNumberSelectedMethod(number);
+            return;
+        }
+
+        ApplyNumber(number);
+    }
+
+    private void ApplyNumber(int number)
     {
         if (_selectedIndex < 0)
             return;

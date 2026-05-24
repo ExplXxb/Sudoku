@@ -26,6 +26,7 @@ public class ContinueAfterGameOverButton : MonoBehaviour
 
     public void ResetLives()
     {
+        StatisticsManager.Instance.RemoveLostGame();
         LivesView.Instance.ResetLives();
     }
 }

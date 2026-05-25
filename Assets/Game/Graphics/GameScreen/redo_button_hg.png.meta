@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 52b3353fa47a3c74ba6b8f0628463292
+guid: 750f9e83a3f53d6439fc85c2d2883a91
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8085586527972011025
-    second: sand_clock1_hg_0
+      213: -5873528580218549834
+    second: redo_button_hg_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sand_clock1_hg_0
+      name: redo_button_hg_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1320
-        height: 1800
+        width: 630
+        height: 630
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fe35b8f54e93acf80800000000000000
-      internalID: -8085586527972011025
+      spriteID: 6b908f520e80d7ea0800000000000000
+      internalID: -5873528580218549834
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sand_clock1_hg_0: -8085586527972011025
+      redo_button_hg_0: -5873528580218549834
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -6,18 +6,29 @@ public class ContinueButton : MonoBehaviour
 {
     private const string SaveKey = "sudoku_save";
 
+    [SerializeField] private Text _buttonText;
     [SerializeField] private Text _previousGameTime;
     [SerializeField] private Text _previousGameDifficulty;
+
+    [SerializeField] private Color _enabledTextColor = Color.black;
+    [SerializeField] private Color _disabledTextColor = Color.gray;
 
     private void Start()
     {
         if (!PlayerPrefs.HasKey(SaveKey))
         {
-            GetComponent<Button>().interactable = false;
+            Button button = GetComponent<Button>();
+
+            button.interactable = false;
+
+            _buttonText.color = _disabledTextColor;
+
             _previousGameTime.text = "";
             _previousGameDifficulty.text = "";
             return;
         }
+
+        _buttonText.color = _enabledTextColor;
 
         SudokuSaveData data = SaveLoadData.Load<SudokuSaveData>(SaveKey);
 

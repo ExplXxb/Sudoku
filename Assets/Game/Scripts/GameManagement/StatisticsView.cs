@@ -45,10 +45,10 @@ public class StatisticsView : MonoBehaviour
         _gamesLostText.text = "Програно: " + data.GamesLost.ToString();
         _gamesAbandonedText.text = "Покинуто: " + data.GamesAbandoned.ToString();
 
-        _playTimeText.text = "Загальний час гри: " + FormatTime(data.TotalPlayTime);
+        _playTimeText.text = "Час за грою: " + FormatTime(data.TotalPlayTime);
 
         _hintsText.text = "Використано підказок: " + data.TotalHintsUsed.ToString();
-        _mistakesText.text = "Усього помилок: " + data.TotalMistakes.ToString();
+        _mistakesText.text = "Кількість помилок: " + data.TotalMistakes.ToString();
 
         _easyBestTimeText.text = "Легко: " + FormatBestTime(data.Easy.BestTime);
         _mediumBestTimeText.text = "Помірно: " + FormatBestTime(data.Medium.BestTime);

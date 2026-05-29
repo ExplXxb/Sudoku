@@ -2286,7 +2286,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
+    m_ColorMultiplier: 1.35
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
@@ -2382,7 +2382,7 @@ MonoBehaviour:
   _previousGameTime: {fileID: 850020343}
   _previousGameDifficulty: {fileID: 1356404153}
   _enabledTextColor: {r: 0, g: 0, b: 0, a: 1}
-  _disabledTextColor: {r: 0.73333335, g: 0.73333335, b: 0.73333335, a: 1}
+  _disabledTextColor: {r: 0.6039216, g: 0.6039216, b: 0.6039216, a: 1}
 --- !u!1 &727369391
 GameObject:
   m_ObjectHideFlags: 0

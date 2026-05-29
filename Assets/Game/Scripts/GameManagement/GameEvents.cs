@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class GameEvents
 {
+    public static Action<bool, bool> OnHistoryStateChanged;
+
+    public static void OnHistoryStateChangedMethod(bool canUndo, bool canRedo)
+    {
+        OnHistoryStateChanged?.Invoke(canUndo, canRedo);
+    }
+
     public static event Action OnToggleInputMode;
 
     public static void OnToggleInputModeMethod()

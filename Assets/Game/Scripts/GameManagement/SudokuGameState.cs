@@ -90,6 +90,8 @@ public class SudokuGameState : MonoBehaviour
         _history.Clear();
         _redoHistory.Clear();
 
+        UpdateHistoryButtons();
+
         var difficulty = GameSettings.Instance.GetDifficulty();
 
         var generator = new SudokuPuzzleGenerator(difficulty.SudokuBoxSize);
@@ -177,6 +179,8 @@ public class SudokuGameState : MonoBehaviour
 
         _gridView.CreateGrid(size);
         _gridView.Draw(_board, -1);
+
+        UpdateHistoryButtons();
     }
 
     public void SaveGame()
@@ -279,6 +283,8 @@ public class SudokuGameState : MonoBehaviour
         SaveGame();
 
         CheckBoardCompleted();
+
+        UpdateHistoryButtons();
     }
 
     private void Redo()
@@ -299,6 +305,8 @@ public class SudokuGameState : MonoBehaviour
         SaveGame();
 
         CheckBoardCompleted();
+
+        UpdateHistoryButtons();
     }
 
     private void SelectCell(int index)
@@ -558,6 +566,14 @@ public class SudokuGameState : MonoBehaviour
         _notesMode = active;
     }
 
+    private void UpdateHistoryButtons()
+    {
+        GameEvents.OnHistoryStateChangedMethod(
+            _history.Count > 0,
+            _redoHistory.Count > 0
+        );
+    }
+
     public void DebugSolveButton()
     {
         SudokuCell lastUnsolved = null;
@@ -612,6 +628,9 @@ public class SudokuGameState : MonoBehaviour
 
         _history.Push(move);
         _redoHistory.Clear();
+
+        UpdateHistoryButtons();
+
         return true;
     }
 

@@ -1118,6 +1118,7 @@ GameObject:
   - component: {fileID: 250048611}
   - component: {fileID: 250048613}
   - component: {fileID: 250048612}
+  - component: {fileID: 250048614}
   m_Layer: 5
   m_Name: ClockImage
   m_TagString: Untagged
@@ -1182,6 +1183,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250048610}
   m_CullTransparentMesh: 1
+--- !u!114 &250048614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250048610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8e145661dd9c94bb89f1e063f85c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClockIconAnimator
+  _image: {fileID: 250048612}
+  _frames:
+  - {fileID: -4974917008726922546, guid: 14f44bc89fbc6904aaca62d3b8c39959, type: 3}
+  - {fileID: 6443735091906642466, guid: a65b908e55fe3aa42ae83d13bb297212, type: 3}
+  - {fileID: -8748592962646714267, guid: a2c284be99c9adf42a26104c0c17f486, type: 3}
+  - {fileID: 3897500512569345466, guid: 74a7776268d61e240b7df9db499bb7bd, type: 3}
+  - {fileID: -8240962741128422872, guid: 255b1c40e7f071b4e9783fdec00007a7, type: 3}
+  - {fileID: 4032313818504429049, guid: 70387ff445e80514c823e130b18c2f63, type: 3}
+  - {fileID: 7624112241040845023, guid: a3ae633b4813b064abbbceee8a7059dc, type: 3}
+  - {fileID: -2571947986256467621, guid: e84b5086e5ae8eb44be07ff933077b8b, type: 3}
+  - {fileID: -4846417639203572047, guid: ad2e221a2f2613146a742d95ec1af698, type: 3}
+  - {fileID: 2490037670772792154, guid: 7bf7c9b66b0567d4e86f48427f08db1c, type: 3}
 --- !u!114 &258723207 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7016062185956705617, guid: af29d92ff1f80b34f999947b5d7841c9, type: 3}
@@ -3535,7 +3560,7 @@ GameObject:
   - component: {fileID: 1094806057}
   - component: {fileID: 1094806059}
   m_Layer: 5
-  m_Name: Cells
+  m_Name: CellsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4004,7 +4029,7 @@ GameObject:
   - component: {fileID: 1343782138}
   - component: {fileID: 1343782137}
   m_Layer: 5
-  m_Name: Grid
+  m_Name: SudokuGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6263,7 +6288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2063186779}
   m_Layer: 5
-  m_Name: BottomInteractiveButtons
+  m_Name: ControlPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

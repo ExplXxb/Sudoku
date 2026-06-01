@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class GameEvents
 {
+    public static Action<int> OnSecondChanged;
+
+    public static void OnSecondChangedMethod(int seconds)
+    {
+        OnSecondChanged?.Invoke(seconds);
+    }
+
     public static Action<bool, bool> OnHistoryStateChanged;
 
     public static void OnHistoryStateChangedMethod(bool canUndo, bool canRedo)

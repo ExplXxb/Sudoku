@@ -4175,7 +4175,7 @@ GameObject:
   - component: {fileID: 1217328946}
   - component: {fileID: 1217328945}
   m_Layer: 5
-  m_Name: BackText
+  m_Name: DebugResetStatText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,6 +12,8 @@ public class Clock : MonoBehaviour
     private float _deltaTime;
     private bool _stopClock = false;
 
+    private int _lastTime = -1;
+
     public static Clock Instance { get; private set; }
 
     private void Awake()
@@ -44,10 +46,17 @@ public class Clock : MonoBehaviour
 
     private void Update()
     {
-        if(GameSettings.Instance.GetPaused() == false && _stopClock == false)
+        if (GameSettings.Instance.GetPaused() == false && _stopClock == false)
         {
             _deltaTime += Time.deltaTime;
+
             TimeSpan span = TimeSpan.FromSeconds(_deltaTime);
+
+            if (span.Seconds != _lastTime)
+            {
+                _lastTime = span.Seconds + span.Minutes * 60 + span.Hours * 60 * 60;
+                GameEvents.OnSecondChangedMethod(span.Seconds + span.Minutes * 60 + span.Hours * 60 * 60);
+            }
 
             string hours = LeadingZero(span.Hours);
             string minutes = LeadingZero(span.Minutes);

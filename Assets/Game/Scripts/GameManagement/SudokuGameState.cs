@@ -196,7 +196,21 @@ public class SudokuGameState : MonoBehaviour
         data.size = _board.Size;
         data.time = Clock.Instance.GetTime();
         data.lives = LivesView.Instance.LivesCount;
-        data.difficultyName = GameSettings.Instance.GetDifficulty().Name;
+
+        
+        switch (GameSettings.Instance.GetDifficulty().Name)
+        {
+            case "Easy":
+                data.difficultyName = "Легко";
+                break;
+            case "Medium":
+                data.difficultyName = "Помірно";
+                break;
+            case "Hard":
+                data.difficultyName = "Складно";
+                break;
+        }
+
 
         var historyList = new List<Move>();
 

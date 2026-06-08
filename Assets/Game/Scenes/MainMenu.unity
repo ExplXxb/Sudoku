@@ -2860,7 +2860,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 85, y: -56}
+  m_AnchoredPosition: {x: 100, y: -57}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &850020343
@@ -4425,8 +4425,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041D\u0430\u0439\u043A\u0440\u0430\u0449\u0438\u0439 \u0447\u0430\u0441
-    \u043F\u043E \u0441\u043A\u043B\u0430\u0434\u043D\u043E\u0441\u0442\u044F\u0445"
+  m_Text: "\u041D\u0430\u0439\u043A\u0440\u0430\u0449\u0438\u0439 \u0447\u0430\u0441"
 --- !u!222 &1260594378
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4748,8 +4747,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -85, y: -56}
-  m_SizeDelta: {x: 200, y: 60}
+  m_AnchoredPosition: {x: -100, y: -57}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1356404153
 MonoBehaviour:

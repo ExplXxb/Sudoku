@@ -6006,6 +6006,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1b0d159515aed4c8880f2f704e8c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _difficulties:
+  - {fileID: 11400000, guid: ab2285c5a3236a541b4e8f74d91617d0, type: 2}
+  - {fileID: 11400000, guid: b882f6a0e84093d429c2d829714dff4e, type: 2}
+  - {fileID: 11400000, guid: b95c37e42d96c5f419c8ec8f6e5fc4a4, type: 2}
 --- !u!1 &1694639391
 GameObject:
   m_ObjectHideFlags: 0

@@ -73,8 +73,6 @@ public class SudokuGridView : MonoBehaviour
 
                 _cells[r, c].Initialize(index, cell);
 
-                _cells[r, c].Initialize(index, cell);
-
                 bool isSelected = index == selectedIndex;
                 bool isHighlighted = selectedIndex != -1 && ComputeHighlighting(index, selectedIndex);
 

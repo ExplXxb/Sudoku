@@ -4,6 +4,8 @@ public class GameSettings : MonoBehaviour
 {
     public static GameSettings Instance;
 
+    [SerializeField] private DifficultyData[] _difficulties;
+
     private DifficultyData _difficulty;
     private bool _continuePreviousGame = false;
     private bool _paused = false;
@@ -31,6 +33,19 @@ public class GameSettings : MonoBehaviour
     public DifficultyData GetDifficulty()
     {
         return _difficulty;
+    }
+
+    public DifficultyData GetDifficultyById(string id)
+    {
+        foreach (DifficultyData difficulty in _difficulties)
+        {
+            if (difficulty.Id == id)
+            {
+                return difficulty;
+            }
+        }
+
+        return null;
     }
 
     public void SetContinuePreviousGame(bool continueGame)

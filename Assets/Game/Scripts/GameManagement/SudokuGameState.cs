@@ -108,6 +108,7 @@ public class SudokuGameState : MonoBehaviour
         SudokuSaveData data = SaveLoadData.Load<SudokuSaveData>(SaveKey);
 
         Clock.Instance.SetTime(data.time);
+        GameSettings.Instance.SetDifficulty(GameSettings.Instance.GetDifficultyById(data.difficultyId));
         LivesView.Instance.SetLives(data.lives);
 
         _sessionStartTime = Clock.Instance.GetTime();
@@ -196,20 +197,7 @@ public class SudokuGameState : MonoBehaviour
         data.size = _board.Size;
         data.time = Clock.Instance.GetTime();
         data.lives = LivesView.Instance.LivesCount;
-
-        
-        switch (GameSettings.Instance.GetDifficulty().Name)
-        {
-            case "Easy":
-                data.difficultyName = "Легко";
-                break;
-            case "Medium":
-                data.difficultyName = "Помірно";
-                break;
-            case "Hard":
-                data.difficultyName = "Складно";
-                break;
-        }
+        data.difficultyId = GameSettings.Instance.GetDifficulty().Id;
 
 
         var historyList = new List<Move>();

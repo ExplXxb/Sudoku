@@ -33,7 +33,7 @@ public class ContinueButton : MonoBehaviour
         SudokuSaveData data = SaveLoadData.Load<SudokuSaveData>(SaveKey);
 
         SetTime(data.time);
-        SetDifficulty(data.difficultyName);
+        SetDifficulty(GameSettings.Instance.GetDifficultyById(data.difficultyId).Name);
     }
 
     private void SetDifficulty(string difficulty)

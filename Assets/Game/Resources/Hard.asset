@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79948ea7a4b13a418db31d260c3947b, type: 3}
   m_Name: Hard
   m_EditorClassIdentifier: Assembly-CSharp::DifficultyData
-  _name: Hard
+  _id: hard
+  _name: "\u0421\u043A\u043B\u0430\u0434\u043D\u043E"
   _sudokuBoxSize: 3
   _minClues: 26
   _maxClues: 32

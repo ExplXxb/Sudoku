@@ -5,7 +5,7 @@ public class SudokuSaveData
 {
     public int size;
     public float time;
-    public string difficultyName;
+    public string difficultyId;
     public int errors;
     public int lives;
     public List<CellSaveData> cells;
